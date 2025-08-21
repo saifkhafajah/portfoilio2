@@ -26,7 +26,7 @@
       --muted: #9fb0c6;
       --text: #e7edf6;
       --primary: #4f8cff;
-      --primary-2: #75ffcc;
+      --primary-2: #6495f1;
       --accent: #ffd166;
       --danger: #ff6b6b;
       --ring: 0 0 0 6px rgba(79, 140, 255, .15);
@@ -318,8 +318,7 @@ nav a, nav .btn { font-size: 0.8rem; padding: 0.5rem 0.7rem; }
   <header>
     <nav class="container flex between center">
       <a href="#" class="flex center gap-2" aria-label="Home">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3l8 5v8l-8 5-8-5V8l8-5z" stroke="currentColor" stroke-width="1.4"/><path d="M12 3v18" stroke="currentColor" stroke-width="1.4" opacity=".5"/></svg>
-        <strong style="color:var(--text)">Saif Khafajah</strong>
+        <strong style="color:var(--text)">SAIF KHAFAJAH</strong>
       </a>
       <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-controls="navLinks" aria-expanded="false">
         <span></span>
@@ -332,7 +331,7 @@ nav a, nav .btn { font-size: 0.8rem; padding: 0.5rem 0.7rem; }
         <a href="#projects">Projects</a>
         <a href="#experience">Experience</a>
         <a href="#contact">Contact</a>
-        <a class="btn btn-primary" href="assets/SaifKhafajahResume.pdf" download>Download CV</a>
+        <a class="btn btn-primary" href="assets/saif updated CV Jul 2025.pdf" download>Download CV</a>
       </div>
     </nav>
   </header>
@@ -498,25 +497,7 @@ system optimization..</p>
       <p class="section-sub">A few projects showcasing robotics, electronics, and control.</p>
 
       <div class="grid projects" data-animate>
-        <!-- Project 1 -->
-        <article class="card project">
-          <img src="assets/swarm.png" alt="Swarm robots on a test field" />
-          <div class="stack" style="gap:.6rem; margin-top:.8rem">
-            <div class="meta">
-              <span class="tag">ROS 2</span>
-              <span class="tag">Multi‑Robot</span>
-              <span class="tag">LiDAR</span>
-            </div>
-            <h3>Swarm Robot Platform</h3>
-            <p>Designed a multi‑unit swarm with shared 2D LiDAR, centralized map server, and on‑robot microcontrollers. Implemented formation control and obstacle avoidance in ROS 2.</p>
-            <div class="flex gap-2">
-              <a class="btn" href="#" aria-label="View case study for Swarm Robot Platform">Case Study</a>
-              <a class="btn" href="https://github.com/aswathselvam/swarm_robots/tree/main" target="_blank" rel="noopener">GitHub</a>
-            </div>
-          </div>
-        </article>
-
-        <!-- Project 2 -->
+         <!-- Project 1 -->
         <article class="card project">
           <img src="assets/marsrover.jpg" alt="Compact sumo robot with belt drive" />
           <div class="stack" style="gap:.6rem; margin-top:.8rem">
@@ -532,8 +513,7 @@ system optimization..</p>
             </div>
           </div>
         </article>
-
-        <!-- Project 3 -->
+          <!-- Project 2 -->
         <article class="card project">
           <img src="assets/Quadpcb.JPG" alt="Custom PCB motor driver board" />
           <div class="stack" style="gap:.6rem; margin-top:.8rem">
@@ -547,6 +527,24 @@ system optimization..</p>
             <div class="flex gap-2">
               <a class="btn" href="#">Schematic</a>
               <a class="btn" href="#">Layout</a>
+            </div>
+          </div>
+        </article>
+        <!-- Project 3 -->
+        <article class="card project">
+          <img src="assets/Fusion 360 iso 5DOF .jpg" alt="Swarm robots on a test field" />
+          <div class="stack" style="gap:.6rem; margin-top:.8rem">
+            <div class="meta">
+              <span class="tag">Open CV</span>
+              <span class="tag">Ros 1 </span>
+              <span class="tag">Altuim</span>
+               <span class="tag">fusion 360</span>
+            </div>
+            <h3>5 DOF Robot Arm for Industrial Sorting </h3>
+            <p>Designed and developed a robotic arm with 5 degrees of freedom, integrating Arduino and Raspberry Pi for control. Implemented computer vision using OpenCV to detect and sort objects by color and shape. Applied inverse kinematics for precise motion control, enabling real-time sorting in industrial-like scenarios.</p>
+            <div class="flex gap-2">
+              <a class="btn" href="#" aria-label="View case study for Swarm Robot Platform">Case Study</a>
+              <a class="btn" href="https://github.com/aswathselvam/swarm_robots/tree/main" target="_blank" rel="noopener">GitHub</a>
             </div>
           </div>
         </article>
