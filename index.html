@@ -332,6 +332,20 @@ nav a, nav .btn { font-size: 0.8rem; padding: 0.5rem 0.7rem; }
 }
 
  </style>
+ <style>
+ .service-logo {
+  width: 150px;         /* adjust size */
+  height: auto;
+  display: block;
+  margin: 0 auto 15px auto; /* centers logo above the title */
+  transition: transform 0.3s, filter 0.3s;
+}
+
+.card:hover .service-logo {
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 10px rgb(252, 252, 252)); /* glow effect on hover */
+}
+</style>
 
 <style>
 .skill-logo {
@@ -339,6 +353,10 @@ nav a, nav .btn { font-size: 0.8rem; padding: 0.5rem 0.7rem; }
   height: auto;
   display: block;
   margin: 0 auto 15px auto; /* center above title */
+}
+.card:hover .skill-logo {
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 10px rgb(254, 254, 254)); /* glow effect on hover */
 }
  </style>
   <!-- Schema.org JSON-LD -->
@@ -737,7 +755,7 @@ system optimization..</p>
           <div class="dot" aria-hidden="true"></div>
           <div class="flex between">
             <strong>Robotics Intern — orange Jordan</strong>
-            <span style="color:var(--muted)">2023 – present</span>
+            <span style="color:var(--muted)">2023 – 2024</span>
           </div>
           <p>Mars jo Rover :</p>
            <p> - fabrication team leader. </p>
@@ -757,28 +775,37 @@ system optimization..</p>
     </section>
 
     <!-- SERVICES / CTA -->
-    <section id="services">
-      <div class="kicker">SERVICES</div>
-      <h2 class="section-title">How I can help</h2>
-      <div class="grid skills" data-animate>
-        <div class="card">
-          <h3>Prototype to MVP</h3>
-          <p>Rapid hardware iterations, embedded firmware, and integration to get you to your first field test.</p>
-        </div>
-        <div class="card">
-          <h3>Robotics & ROS</h3>
-          <p>Navigation stack setup, sensor drivers, simulation, and deployment pipelines.</p>
-        </div>
-        <div class="card">
-          <h3>Electronics & Power</h3>
-          <p>Custom PCBs, power distribution for motors/servos, safety and protections.</p>
-        </div>
-        <div class="card">
-          <h3>Consulting & Training</h3>
-          <p>Workshops for student teams or startups: PCB, control, and ROS fundamentals.</p>
-        </div>
-      </div>
-    </section>
+   <section id="services">
+  <div class="kicker">SERVICES</div>
+  <h2 class="section-title">How I can help</h2>
+  <div class="grid skills" data-animate>
+
+    <div class="card">
+      <img src="assets/prototyping.jpg" alt="Prototype to MVP" class="service-logo">
+      <h3>Prototype to MVP</h3>
+      <p>Rapid hardware iterations, embedded firmware, and integration to get you to your first field test.</p>
+    </div>
+
+    <div class="card">
+      <img src="assets/gazebo.jpg" alt="Robotics & ROS" class="service-logo">
+      <h3>Robotics & ROS</h3>
+      <p>Navigation stack setup, sensor drivers, simulation, and deployment pipelines.</p>
+    </div>
+
+    <div class="card">
+      <img src="assets/pcb.jpg" alt="Electronics & Power" class="service-logo">
+      <h3>Electronics & Power</h3>
+      <p>Custom PCBs, power distribution for motors/servos, safety and protections.</p>
+    </div>
+
+    <div class="card">
+      <img src="assets/course.jpg" alt="Consulting & Training" class="service-logo">
+      <h3>Consulting & Training</h3>
+      <p>Workshops for student teams or startups: PCB, control, and ROS fundamentals.</p>
+    </div>
+
+  </div>
+</section>
 
     <!-- CONTACT -->
     <section id="contact">
@@ -804,7 +831,10 @@ system optimization..</p>
             <strong>Links</strong>
             <div class="flex gap-2">
               <a class="btn" href="https://www.linkedin.com/in/saif-khafajah-898071236" target="_blank" rel="noopener" aria-label="LinkedIn">LinkedIn</a>
+               <a class="btn" href="https://www.instagram.com/saifkhafajah" target="_blank" rel="noopener" aria-label="LinkedIn">Instagram</a>
+
             </div>
+            
           </div>
         </aside>
       </div>
@@ -904,4 +934,3 @@ document.addEventListener("click", e => {
 </html>
 </body>
 </html>
-
