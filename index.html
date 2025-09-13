@@ -333,6 +333,14 @@ nav a, nav .btn { font-size: 0.8rem; padding: 0.5rem 0.7rem; }
 
  </style>
 
+<style>
+.skill-logo {
+  width: 50px;      /* adjust size */
+  height: auto;
+  display: block;
+  margin: 0 auto 15px auto; /* center above title */
+}
+ </style>
   <!-- Schema.org JSON-LD -->
   <script type="application/ld+json">
   {
@@ -538,62 +546,75 @@ system optimization..</p>
       </div>
     </section>
 
-    <!-- SKILLS MATRIX -->
-    <section id="skills">
-      <div class="kicker">SKILLS</div>
-      <h2 class="section-title">What I’m good at</h2>
-      <p class="section-sub">From schematic to firmware, and from simulation to field testing.</p>
-      <div class="grid skills" data-animate>
-        <div class="card">
-          <h3>Embedded & Firmware</h3>
-          <ul>
-            <li>STM32, ESP32, AVR (Arduino/ATmega)</li>
-            <li>Drivers, HAL, FreeRTOS, peripherals (I²C, SPI, UART, CAN)</li>
-            <li>Power design for servos, BLDC, steppers; DC/DC and EMI basics</li>
-          </ul>
-        </div>
-        <div class="card">
-          <h3>Robotics & ROS</h3>
-          <ul>
-            <li>ROS/ROS 2 nodes, TF, navigation stack, sensor fusion</li>
-            <li>Gazebo/Isaac Sim; URDF/xacro; control + PID tuning</li>
-            <li>SLAM (2D LiDAR), multi-robot coordination</li>
-          </ul>
-        </div>
-        <div class="card">
-          <h3>Electronics & PCB</h3>
-          <ul>
-            <li>KiCad/Altium: schematics, layout, DRC, impedance control</li>
-            <li>Mixed-signal, buck converters, gate drivers, H-bridges</li>
-            <li>DFM/DFT, test jigs, documentation</li>
-          </ul>
-        </div>
-        <div class="card">
-          <h3>CAD & Mechanisms</h3>
-          <ul>
-            <li>SolidWorks/Fusion: chassis, mounts, gear trains, belt drives</li>
-            <li>FEA basics, tolerance stacks, BOM and assembly drawings</li>
-          </ul>
-        </div>
-        <div class="card">
-          <h3>Digital fabrication</h3>
-          <ul>
-            <li>3D printing</li>
-            <li>CNC Machines</li>
-            <li>prototyping</li>
-          </ul>
-        </div>
-      </div>
-    </section>
+   <!-- SKILLS MATRIX -->
+<section id="skills">
+  <div class="kicker">SKILLS</div>
+  <h2 class="section-title">What I’m good at</h2>
+  <p class="section-sub">From schematic to firmware, and from simulation to field testing.</p>
+  <div class="grid skills" data-animate>
+    
+    <div class="card">
+      <img src="assets/embedded.png" alt="Embedded & Firmware" class="skill-logo">
+      <h3>Embedded & Firmware</h3>
+      <ul>
+        <li>STM32, ESP32, AVR (Arduino/ATmega)</li>
+        <li>Drivers, HAL, FreeRTOS, peripherals (I²C, SPI, UART, CAN)</li>
+        <li>Power design for servos, BLDC, steppers; DC/DC and EMI basics</li>
+      </ul>
+    </div>
+    
+    <div class="card">
+      <img src="assets/robotic-arm.png" alt="Robotics & ROS" class="skill-logo">
+      <h3>Robotics & ROS</h3>
+      <ul>
+        <li>ROS/ROS 2 nodes, TF, navigation stack, sensor fusion</li>
+        <li>Gazebo/Isaac Sim; URDF/xacro; control + PID tuning</li>
+        <li>SLAM (2D LiDAR), multi-robot coordination</li>
+      </ul>
+    </div>
+    
+    <div class="card">
+      <img src="assets/pcb-board.png" alt="Electronics & PCB" class="skill-logo">
+      <h3>Electronics & PCB</h3>
+      <ul>
+        <li>KiCad/Altium: schematics, layout, DRC, impedance control</li>
+        <li>Mixed-signal, buck converters, gate drivers, H-bridges</li>
+        <li>DFM/DFT, test jigs, documentation</li>
+      </ul>
+    </div>
+    
+    <div class="card">
+      <img src="assets/object.png" alt="CAD & Mechanisms" class="skill-logo">
+      <h3>CAD & Mechanisms</h3>
+      <ul>
+        <li>SolidWorks/Fusion: chassis, mounts, gear trains, belt drives</li>
+        <li>FEA basics, tolerance stacks, BOM and assembly drawings</li>
+      </ul>
+    </div>
+    
+    <div class="card">
+      <img src="assets/3d-printing.png" alt="Digital fabrication" class="skill-logo">
+      <h3>Digital fabrication</h3>
+      <ul>
+        <li>3D printing</li>
+        <li>CNC Machines</li>
+        <li>prototyping</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
     <!-- Softwares -->
      <section id="tools">
   <h2>Used Softwares</h2>
   <div class="tools-grid">
-    <img src="assets/altuim logo.png" alt="Altium Designer">
+    <img src="assets/Altuim logo2.png" alt="Altium Designer">
     <img src="assets/Fusion360_Logo.png" alt="Arduino">
     <img src="assets/ROS&ROS2.png" alt="ROS">
     <img src="assets/rasberry.png" alt="Python">
     <img src="assets/Visual_Studio_Code_1.35_icon.svg" alt="SolidWorks">
+     <img src="assets/matlab.png" alt="SolidWorks">
   </div>
 </section>
     <!-- PROJECTS -->
@@ -768,6 +789,8 @@ system optimization..</p>
           <div class="card">
             <strong>Location</strong>
             <p>Amman, Jordan</p>
+             <img src="assets/location.jpg" alt="NVIDIA Isaac Sim robotics environment" />
+
           </div>
           <div class="card">
             <strong>Email</strong>
@@ -896,4 +919,3 @@ document.addEventListener("click", e => {
 </html>
 </body>
 </html>
-
