@@ -123,6 +123,8 @@
             font-family: var(--font-code);
             color: var(--primary-accent);
             font-size: 1rem;
+            display: block; /* Forces the orange text to the next line */
+            margin-top: 15px; /* Adds space between the orange line and the text */
         }
 
         .btn {
@@ -285,7 +287,7 @@
 
         .hero-title {
             font-family: var(--font-header);
-            font-size: clamp(2.5rem, 8vw, 4rem); /* Fluid scaling for mobile */
+            font-size: clamp(2rem, 7vw, 4rem); /* Fluid scaling for mobile */
             line-height: 1.1;
             color: var(--text-highlight);
             margin-bottom: 20px;
@@ -1065,7 +1067,7 @@
             
             /* Stacking title for mobile and making span solid orange */
             .hero-title span {
-                display: block;
+                display: inline; /* Keep on same line */
                 color: var(--primary-accent);
                 -webkit-text-stroke: 0;
             }
