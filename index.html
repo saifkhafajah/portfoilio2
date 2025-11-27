@@ -340,6 +340,15 @@
             position: relative;
             z-index: 2;
         }
+        
+        #software-arsenal {
+            background: var(--bg-dark);
+            padding: 30px 0;
+            overflow: hidden;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            z-index: 2;
+        }
 
         .marquee-container {
             max-width: 100%;
@@ -374,11 +383,20 @@
 
         .marquee::before { left: 0; background: linear-gradient(to right, var(--bg-panel), transparent); }
         .marquee::after { right: 0; background: linear-gradient(to left, var(--bg-panel), transparent); }
+        
+        /* Adjust gradient for the darker software section */
+        #software-arsenal .marquee::before { background: linear-gradient(to right, var(--bg-dark), transparent); }
+        #software-arsenal .marquee::after { background: linear-gradient(to left, var(--bg-dark), transparent); }
 
         .marquee-track {
             display: flex;
             width: fit-content;
             animation: scroll 40s linear infinite;
+        }
+        
+        /* Reverse scroll for software bar */
+        .marquee-track.reverse {
+            animation: scroll-reverse 40s linear infinite;
         }
 
         .partner-logo {
@@ -423,6 +441,11 @@
         @keyframes scroll {
             0% { transform: translateX(0); }
             100% { transform: translateX(-50%); } 
+        }
+        
+        @keyframes scroll-reverse {
+            0% { transform: translateX(-50%); }
+            100% { transform: translateX(0); } 
         }
         
         .marquee:hover .marquee-track { animation-play-state: paused; }
@@ -838,9 +861,29 @@
             min-height: 4.5em;
         }
 
-        .project-links { display: flex; gap: 15px; }
+        .project-links { display: flex; align-items: center; gap: 15px; }
         .project-link { font-size: 1.1rem; color: var(--text-main); }
         .project-link:hover { color: var(--primary-accent); }
+        
+        .project-tools-icons {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-left: auto; /* Push to right */
+        }
+        
+        .tool-icon-small {
+            width: 20px;
+            height: 20px;
+            object-fit: contain;
+            filter: grayscale(100%) brightness(1.5);
+            transition: var(--transition-fast);
+        }
+        
+        .tool-icon-small:hover {
+            filter: none;
+            transform: scale(1.2);
+        }
 
         /* =========================================
            9. CONTACT SECTION
@@ -1174,6 +1217,76 @@
             </div>
         </div>
     </section>
+    
+    <!-- Software Arsenal Marquee (New) -->
+    <section id="software-arsenal">
+        <div class="marquee-container">
+            <h4 class="marquee-title">Software Arsenal</h4>
+            <div class="marquee">
+                <div class="marquee-track reverse">
+                    <!-- Logos - Set 1 -->
+                    <div class="partner-logo">
+                        <img src="assets/Altuim logo2.png" alt="Altium Designer" title="Altium Designer">
+                    </div>
+                    <div class="partner-logo">
+                        <img src="assets/Fusion360_Logo.png" alt="Fusion 360" title="Fusion 360">
+                    </div>
+                    <div class="partner-logo">
+                        <img src="assets/ROS&ROS2.png" alt="ROS & ROS2" title="ROS & ROS2">
+                    </div>
+                    <div class="partner-logo">
+                        <img src="assets/rasberry.png" alt="Raspberry Pi" title="Raspberry Pi">
+                    </div>
+                    <div class="partner-logo">
+                        <img src="assets/Visual_Studio_Code_1.35_icon.svg" alt="VS Code" title="VS Code">
+                    </div>
+                    <div class="partner-logo">
+                        <img src="assets/matlab.png" alt="MATLAB" title="MATLAB">
+                    </div>
+
+                    <!-- Logos - Set 2 (Duplicate) -->
+                    <div class="partner-logo">
+                        <img src="assets/Altuim logo2.png" alt="Altium Designer" title="Altium Designer">
+                    </div>
+                    <div class="partner-logo">
+                        <img src="assets/Fusion360_Logo.png" alt="Fusion 360" title="Fusion 360">
+                    </div>
+                    <div class="partner-logo">
+                        <img src="assets/ROS&ROS2.png" alt="ROS & ROS2" title="ROS & ROS2">
+                    </div>
+                    <div class="partner-logo">
+                        <img src="assets/rasberry.png" alt="Raspberry Pi" title="Raspberry Pi">
+                    </div>
+                    <div class="partner-logo">
+                        <img src="assets/Visual_Studio_Code_1.35_icon.svg" alt="VS Code" title="VS Code">
+                    </div>
+                    <div class="partner-logo">
+                        <img src="assets/matlab.png" alt="MATLAB" title="MATLAB">
+                    </div>
+                    
+                    <!-- Logos - Set 3 (Buffer) -->
+                    <div class="partner-logo">
+                        <img src="assets/Altuim logo2.png" alt="Altium Designer" title="Altium Designer">
+                    </div>
+                    <div class="partner-logo">
+                        <img src="assets/Fusion360_Logo.png" alt="Fusion 360" title="Fusion 360">
+                    </div>
+                    <div class="partner-logo">
+                        <img src="assets/ROS&ROS2.png" alt="ROS & ROS2" title="ROS & ROS2">
+                    </div>
+                    <div class="partner-logo">
+                        <img src="assets/rasberry.png" alt="Raspberry Pi" title="Raspberry Pi">
+                    </div>
+                    <div class="partner-logo">
+                        <img src="assets/Visual_Studio_Code_1.35_icon.svg" alt="VS Code" title="VS Code">
+                    </div>
+                    <div class="partner-logo">
+                        <img src="assets/matlab.png" alt="MATLAB" title="MATLAB">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- About Section -->
     <section id="about">
@@ -1349,6 +1462,10 @@
                         </p>
                         <div class="project-links">
                             <a href="#" class="project-link"><i class="fas fa-info-circle"></i> Details</a>
+                            <div class="project-tools-icons">
+                                <img src="assets/Altuim logo2.png" class="tool-icon-small" title="Altium">
+                                <img src="assets/Fusion360_Logo.png" class="tool-icon-small" title="Fusion 360">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1369,6 +1486,10 @@
                         <div class="project-links">
                             <a href="#" class="project-link">Schematic</a>
                             <a href="#" class="project-link">Layout</a>
+                            <div class="project-tools-icons">
+                                <img src="assets/Altuim logo2.png" class="tool-icon-small" title="Altium">
+                                <img src="assets/Visual_Studio_Code_1.35_icon.svg" class="tool-icon-small" title="VS Code">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1388,6 +1509,11 @@
                         </p>
                         <div class="project-links">
                             <a href="https://github.com/aswathselvam/swarm_robots/tree/main" class="project-link"><i class="fab fa-github"></i></a>
+                            <div class="project-tools-icons">
+                                <img src="assets/ROS&ROS2.png" class="tool-icon-small" title="ROS">
+                                <img src="assets/Fusion360_Logo.png" class="tool-icon-small" title="Fusion 360">
+                                <img src="assets/rasberry.png" class="tool-icon-small" title="Raspberry Pi">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1407,6 +1533,11 @@
                         </p>
                         <div class="project-links">
                             <a href="#" class="project-link">Read More</a>
+                            <div class="project-tools-icons">
+                                <img src="assets/Altuim logo2.png" class="tool-icon-small" title="Altium">
+                                <img src="assets/Fusion360_Logo.png" class="tool-icon-small" title="Fusion 360">
+                                <img src="assets/rasberry.png" class="tool-icon-small" title="Raspberry Pi">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1426,6 +1557,9 @@
                         </p>
                         <div class="project-links">
                             <a href="#" class="project-link">View</a>
+                            <div class="project-tools-icons">
+                                <img src="assets/ROS&ROS2.png" class="tool-icon-small" title="ROS">
+                            </div>
                         </div>
                     </div>
                 </div>
