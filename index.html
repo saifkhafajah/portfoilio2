@@ -384,25 +384,45 @@
             display: flex;
             align-items: center;
             gap: 15px;
-            padding: 0 50px;
-            color: var(--text-muted);
-            font-family: var(--font-header);
-            font-size: 1.2rem;
-            font-weight: 700;
-            opacity: 0.5;
+            padding: 0 40px;
+            opacity: 0.6;
             transition: var(--transition-fast);
-            white-space: nowrap;
             cursor: pointer;
         }
 
+        .partner-logo a {
+            display: flex; 
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+        }
+
+        /* Default style for text/cutout logos (makes them white silhouettes) */
+        .partner-logo img {
+            height: 50px; 
+            width: auto;
+            max-width: 150px;
+            object-fit: contain;
+            filter: grayscale(100%) brightness(200%) contrast(0); 
+            transition: all 0.3s ease;
+        }
+
+        /* Specific style for solid block logos (like Orange) to keep text visible */
+        .partner-logo img.logo-block {
+            filter: grayscale(100%) opacity(0.7);
+        }
+
         .partner-logo:hover {
-            color: var(--primary-accent);
             opacity: 1;
-            text-shadow: 0 0 10px rgba(255, 106, 0, 0.3);
+        }
+
+        .partner-logo:hover img {
+            filter: none; 
+            transform: scale(1.1);
+            filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.2));
+            opacity: 1;
         }
         
-        .partner-logo i { font-size: 1.8rem; }
-
         @keyframes scroll {
             0% { transform: translateX(0); }
             100% { transform: translateX(-50%); } 
@@ -448,7 +468,6 @@
             left: 10px;
         }
 
-        /* Using your actual image from assets */
         .profile-image {
             width: 100%;
             height: 100%;
@@ -1046,26 +1065,86 @@
             <h4 class="marquee-title">Trusted by Industry Leaders</h4>
             <div class="marquee">
                 <div class="marquee-track">
-                    <!-- Logos -->
-                    <div class="partner-logo"><i class="fab fa-google"></i> <span>Google</span></div>
-                    <div class="partner-logo"><i class="fab fa-amazon"></i> <span>Amazon Robotics</span></div>
-                    <div class="partner-logo"><i class="fas fa-broadcast-tower"></i> <span>Orange Jordan</span></div>
-                    <div class="partner-logo"><i class="fab fa-microsoft"></i> <span>Microsoft</span></div>
-                    <div class="partner-logo"><i class="fas fa-space-shuttle"></i> <span>NASA JPL</span></div>
-                    <div class="partner-logo"><i class="fas fa-robot"></i> <span>Boston Dynamics</span></div>
-                    <div class="partner-logo"><i class="fab fa-tesla"></i> <span>Tesla</span></div>
-                    <div class="partner-logo"><i class="fas fa-microchip"></i> <span>NVIDIA</span></div>
-                    <div class="partner-logo"><i class="fas fa-industry"></i> <span>Siemens</span></div>
-                    <!-- Duplicate -->
-                    <div class="partner-logo"><i class="fab fa-google"></i> <span>Google</span></div>
-                    <div class="partner-logo"><i class="fab fa-amazon"></i> <span>Amazon Robotics</span></div>
-                    <div class="partner-logo"><i class="fas fa-broadcast-tower"></i> <span>Orange Jordan</span></div>
-                    <div class="partner-logo"><i class="fab fa-microsoft"></i> <span>Microsoft</span></div>
-                    <div class="partner-logo"><i class="fas fa-space-shuttle"></i> <span>NASA JPL</span></div>
-                    <div class="partner-logo"><i class="fas fa-robot"></i> <span>Boston Dynamics</span></div>
-                    <div class="partner-logo"><i class="fab fa-tesla"></i> <span>Tesla</span></div>
-                    <div class="partner-logo"><i class="fas fa-microchip"></i> <span>NVIDIA</span></div>
-                    <div class="partner-logo"><i class="fas fa-industry"></i> <span>Siemens</span></div>
+                    <!-- Logos - Set 1 -->
+                    <div class="partner-logo">
+                        <a href="https://www.orange.jo" target="_blank" title="Orange Jordan">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/c/c8/Orange_logo.svg" alt="Orange Jordan" class="logo-block">
+                        </a>
+                    </div>
+                    <div class="partner-logo">
+                        <a href="https://www.autodesk.com" target="_blank" title="Autodesk">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b3/Autodesk_Logo_2021.svg" alt="Autodesk">
+                        </a>
+                    </div>
+                    <div class="partner-logo">
+                        <a href="https://www.ieee.org" target="_blank" title="IEEE">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/2/21/IEEE_logo.svg" alt="IEEE">
+                        </a>
+                    </div>
+                    <div class="partner-logo">
+                        <a href="https://mitxonline.mit.edu" target="_blank" title="MITx">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/9/93/MITx_logo.svg" alt="MITx">
+                        </a>
+                    </div>
+                    <div class="partner-logo">
+                        <a href="https://www.bau.edu.jo" target="_blank" title="Al-Balqa' Applied University">
+                            <img src="https://upload.wikimedia.org/wikipedia/en/a/a9/Al-Balqa%27_Applied_University_Logo.png" alt="Al-Balqa' Applied University">
+                        </a>
+                    </div>
+
+                    <!-- Logos - Set 2 (Duplicate for smooth loop) -->
+                    <div class="partner-logo">
+                        <a href="https://www.orange.jo" target="_blank" title="Orange Jordan">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/c/c8/Orange_logo.svg" alt="Orange Jordan" class="logo-block">
+                        </a>
+                    </div>
+                    <div class="partner-logo">
+                        <a href="https://www.autodesk.com" target="_blank" title="Autodesk">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b3/Autodesk_Logo_2021.svg" alt="Autodesk">
+                        </a>
+                    </div>
+                    <div class="partner-logo">
+                        <a href="https://www.ieee.org" target="_blank" title="IEEE">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/2/21/IEEE_logo.svg" alt="IEEE">
+                        </a>
+                    </div>
+                    <div class="partner-logo">
+                        <a href="https://mitxonline.mit.edu" target="_blank" title="MITx">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/9/93/MITx_logo.svg" alt="MITx">
+                        </a>
+                    </div>
+                    <div class="partner-logo">
+                        <a href="https://www.bau.edu.jo" target="_blank" title="Al-Balqa' Applied University">
+                            <img src="https://upload.wikimedia.org/wikipedia/en/a/a9/Al-Balqa%27_Applied_University_Logo.png" alt="Al-Balqa' Applied University">
+                        </a>
+                    </div>
+
+                     <!-- Logos - Set 3 (Extra buffer) -->
+                     <div class="partner-logo">
+                        <a href="https://www.orange.jo" target="_blank" title="Orange Jordan">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/c/c8/Orange_logo.svg" alt="Orange Jordan" class="logo-block">
+                        </a>
+                    </div>
+                    <div class="partner-logo">
+                        <a href="https://www.autodesk.com" target="_blank" title="Autodesk">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b3/Autodesk_Logo_2021.svg" alt="Autodesk">
+                        </a>
+                    </div>
+                    <div class="partner-logo">
+                        <a href="https://www.ieee.org" target="_blank" title="IEEE">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/2/21/IEEE_logo.svg" alt="IEEE">
+                        </a>
+                    </div>
+                    <div class="partner-logo">
+                        <a href="https://mitxonline.mit.edu" target="_blank" title="MITx">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/9/93/MITx_logo.svg" alt="MITx">
+                        </a>
+                    </div>
+                    <div class="partner-logo">
+                        <a href="https://www.bau.edu.jo" target="_blank" title="Al-Balqa' Applied University">
+                            <img src="https://upload.wikimedia.org/wikipedia/en/a/a9/Al-Balqa%27_Applied_University_Logo.png" alt="Al-Balqa' Applied University">
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1082,6 +1161,7 @@
             <div class="about-grid">
                 <div class="about-img-wrapper reveal">
                     <div class="profile-image">
+                        <!-- Reverted to local asset -->
                         <img src="assets/saifkhafajah.jpeg" alt="Saif Khafajah" onerror="this.src='https://via.placeholder.com/400x400.png?text=Saif+Khafajah'">
                     </div>
                 </div>
@@ -1232,6 +1312,7 @@
                 <!-- Project 1: Mars jo rover -->
                 <div class="project-card reveal" data-category="hw robotics">
                     <div class="project-image">
+                        <!-- Reverted to local asset -->
                         <img src="assets/mars rover sofex.jpeg" alt="Mars jo rover" onerror="this.src='https://via.placeholder.com/600x400?text=Mars+Rover'">
                         <i class="fas fa-space-shuttle project-icon"></i>
                     </div>
@@ -1250,6 +1331,7 @@
                 <!-- Project 2: Quadcopter pcb controller -->
                 <div class="project-card reveal" data-category="hw">
                     <div class="project-image">
+                        <!-- Reverted to local asset -->
                         <img src="assets/Quadpcb.JPG" alt="Quadcopter PCB" onerror="this.src='https://via.placeholder.com/600x400?text=Quadcopter+PCB'">
                         <i class="fas fa-microchip project-icon"></i>
                     </div>
@@ -1269,6 +1351,7 @@
                 <!-- Project 3: 5 DOF Robot Arm -->
                 <div class="project-card reveal" data-category="ros robotics">
                     <div class="project-image">
+                        <!-- Reverted to local asset -->
                         <img src="assets/Fusion 360 iso 5DOF .jpg" alt="5 DOF Robot Arm" onerror="this.src='https://via.placeholder.com/600x400?text=Robot+Arm'">
                         <i class="fas fa-code-branch project-icon"></i>
                     </div>
@@ -1287,6 +1370,7 @@
                 <!-- Project 4: 1U Cubesat -->
                 <div class="project-card reveal" data-category="hw">
                     <div class="project-image">
+                        <!-- Reverted to local asset -->
                         <img src="assets/cubesat.jpg" alt="1U Cubesat" onerror="this.src='https://via.placeholder.com/600x400?text=Cubesat'">
                         <i class="fas fa-satellite project-icon"></i>
                     </div>
@@ -1305,6 +1389,7 @@
                 <!-- Project 5: F450 DJI Replica -->
                 <div class="project-card reveal" data-category="robotics">
                     <div class="project-image">
+                        <!-- Reverted to local asset -->
                         <img src="assets/f450.jpeg" alt="F450 DJI Replica" onerror="this.src='https://via.placeholder.com/600x400?text=F450+Replica'">
                         <i class="fas fa-plane project-icon"></i>
                     </div>
