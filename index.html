@@ -738,6 +738,32 @@
         .timeline-content p { font-size: 0.95rem; color: var(--text-muted); }
 
         /* =========================================
+           7.5. INTERVIEW SECTION
+           ========================================= */
+        #interview {
+            padding: var(--section-padding);
+            background-color: var(--bg-panel);
+        }
+
+        .video-container {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            border: 1px solid rgba(255, 106, 0, 0.2);
+            background: var(--bg-card);
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        video {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 4px;
+        }
+
+        /* =========================================
            8. PROJECTS SECTION
            ========================================= */
         #projects {
@@ -1118,6 +1144,7 @@
                 <li><a href="#skills" class="nav-link">Tech Stack</a></li>
                 <li><a href="#projects" class="nav-link">Projects</a></li>
                 <li><a href="#experience" class="nav-link">Experience</a></li>
+                <li><a href="#interview" class="nav-link">Interview</a></li>
                 <li><a href="#contact" class="nav-link">Contact</a></li>
                 <li><a href="assets/saif updated CV Jul 2025.pdf" class="nav-link" download>Download CV</a></li>
             </ul>
@@ -1152,7 +1179,7 @@
     <!-- Trusted By / Marquee Section -->
     <section id="trusted-by">
         <div class="marquee-container">
-            <h4 class="marquee-title">Trusted by Industry Leaders</h4>
+            <h4 class="marquee-title">Trusted By </h4>
             <div class="marquee">
                 <div class="marquee-track">
                     <!-- Logos - Set 1 -->
@@ -1243,7 +1270,7 @@
     <!-- Software Arsenal Marquee (New) -->
     <section id="software-arsenal">
         <div class="marquee-container">
-            <h4 class="marquee-title">Software Arsenal</h4>
+            <h4 class="marquee-title">Used Software</h4>
             <div class="marquee">
                 <div class="marquee-track reverse">
                     <!-- Logos - Set 1 -->
@@ -1617,6 +1644,23 @@
         </div>
     </section>
 
+    <!-- Interview Section -->
+    <section id="interview">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2 class="section-title">Interview</h2>
+                <span class="section-subtitle">Insights & Vision</span>
+            </div>
+
+            <div class="video-container reveal">
+                <video controls>
+                    <source src="assets/roya.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+    </section>
+
     <!-- Contact Section -->
     <section id="contact">
         <div class="container">
@@ -1986,5 +2030,3 @@
     </script>
 </body>
 </html>
-
-
