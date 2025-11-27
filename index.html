@@ -77,6 +77,11 @@
             list-style: none;
         }
 
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
         /* =========================================
            2. UTILITY CLASSES & LAYOUT
            ========================================= */
@@ -95,7 +100,7 @@
 
         .section-title {
             font-family: var(--font-header);
-            font-size: 2.5rem;
+            font-size: clamp(1.8rem, 5vw, 2.5rem); /* Responsive font sizing */
             color: var(--text-highlight);
             text-transform: uppercase;
             letter-spacing: 2px;
@@ -280,7 +285,7 @@
 
         .hero-title {
             font-family: var(--font-header);
-            font-size: 4rem;
+            font-size: clamp(2.5rem, 8vw, 4rem); /* Fluid scaling for mobile */
             line-height: 1.1;
             color: var(--text-highlight);
             margin-bottom: 20px;
@@ -293,7 +298,7 @@
 
         .typewriter {
             font-family: var(--font-code);
-            font-size: 1.5rem;
+            font-size: clamp(1rem, 4vw, 1.5rem);
             color: var(--text-muted);
             min-height: 1.5em;
             margin-bottom: 40px;
@@ -765,8 +770,8 @@
 
         .projects-grid {
             display: grid;
-            /* Changed minmax from 350px to 280px for better mobile fit */
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            /* Changed minmax to 250px for safer mobile fit */
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             gap: 30px;
         }
 
@@ -962,6 +967,7 @@
             color: var(--text-highlight);
             font-family: var(--font-body);
             transition: var(--transition-fast);
+            font-size: 16px; /* Prevents auto-zoom on iOS */
         }
 
         .form-control:focus {
@@ -1023,9 +1029,8 @@
            ========================================= */
         @media (max-width: 992px) {
             :root { --section-padding: 70px 0; }
-            .hero-title { font-size: 3rem; }
             .about-grid { grid-template-columns: 1fr; }
-            .about-img-wrapper { height: 300px; margin-bottom: 30px; }
+            .about-img-wrapper { height: auto; aspect-ratio: 1/1; margin-bottom: 30px; max-width: 400px; margin-left: auto; margin-right: auto;}
             .contact-container { grid-template-columns: 1fr; padding: 30px; }
         }
 
@@ -1043,14 +1048,23 @@
                 transition: 0.4s ease;
                 border-left: 1px solid var(--border-color);
                 box-shadow: -5px 0 15px rgba(0,0,0,0.5);
+                z-index: 1002;
+            }
+            
+            .nav-link {
+                padding: 10px 0;
+                font-size: 1.1rem;
+                width: 100%;
+                text-align: center;
             }
 
             .nav-links.active { right: 0; }
-            .mobile-menu-btn { display: block; z-index: 1001; }
+            .mobile-menu-btn { display: block; z-index: 1003; }
             
-            .hero-title { font-size: 2.5rem; }
             .hero-greeting { font-size: 1rem; }
-            .section-title { font-size: 2rem; }
+            
+            /* Reduce marquee fade on small screens so more logos are visible */
+            .marquee::before, .marquee::after { width: 50px; }
             
             /* Timeline fixes for mobile */
             .timeline::after { left: 31px; }
@@ -1064,10 +1078,6 @@
         }
         
         @media (max-width: 480px) {
-            .hero-title { font-size: 2rem; }
-            .section-title { font-size: 1.8rem; }
-            .typewriter { font-size: 1.1rem; }
-            
             .btn { width: 100%; text-align: center; margin-bottom: 10px; }
             .hero-content .btn { display: block; width: 100%; margin: 10px 0; }
             
@@ -1076,6 +1086,9 @@
             .filter-btn { padding: 6px 15px; font-size: 0.9rem; }
             
             .footer-content { flex-direction: column; gap: 20px; text-align: center; }
+            
+            .partner-logo { padding: 0 20px; }
+            .partner-logo img { height: 40px; }
         }
     </style>
 </head>
@@ -1116,7 +1129,7 @@
                 <span id="typing-text"></span><span class="cursor"></span>
             </div>
             
-            <div style="display:inline-block;">
+            <div style="display:inline-block; width: 100%;">
                 <a href="#projects" class="btn btn-fill">See Projects</a>
                 <a href="#contact" class="btn">Let's Work Together</a>
             </div>
@@ -1141,7 +1154,7 @@
                     </div>
                     <div class="partner-logo">
                         <a href="https://www.autodesk.com" target="_blank" title="Autodesk">
-                            <img src="assets/autodesk_logo.png.png" alt="Autodesk">
+                            <img src="assets/autodesk_logo.png" alt="Autodesk">
                         </a>
                     </div>
                     <div class="partner-logo">
@@ -1156,7 +1169,7 @@
                     </div>
                     <div class="partner-logo">
                         <a href="https://www.bau.edu.jo" target="_blank" title="Al-Balqa' Applied University">
-                            <img src="assets/bau_logo.png.jpg" alt="Al-Balqa' Applied University">
+                            <img src="assets/bau_logo.png" alt="Al-Balqa' Applied University">
                         </a>
                     </div>
 
@@ -1168,7 +1181,7 @@
                     </div>
                     <div class="partner-logo">
                         <a href="https://www.autodesk.com" target="_blank" title="Autodesk">
-                            <img src="assets/autodesk_logo.png.png" alt="Autodesk">
+                            <img src="assets/autodesk_logo.png" alt="Autodesk">
                         </a>
                     </div>
                     <div class="partner-logo">
@@ -1183,7 +1196,7 @@
                     </div>
                     <div class="partner-logo">
                         <a href="https://www.bau.edu.jo" target="_blank" title="Al-Balqa' Applied University">
-                            <img src="assets/bau_logo.png.jpg" alt="Al-Balqa' Applied University">
+                            <img src="assets/bau_logo.png" alt="Al-Balqa' Applied University">
                         </a>
                     </div>
 
@@ -1195,7 +1208,7 @@
                     </div>
                     <div class="partner-logo">
                         <a href="https://www.autodesk.com" target="_blank" title="Autodesk">
-                            <img src="assets/autodesk_logo.png.png" alt="Autodesk">
+                            <img src="assets/autodesk_logo.png" alt="Autodesk">
                         </a>
                     </div>
                     <div class="partner-logo">
@@ -1210,7 +1223,7 @@
                     </div>
                     <div class="partner-logo">
                         <a href="https://www.bau.edu.jo" target="_blank" title="Al-Balqa' Applied University">
-                            <img src="assets/bau_logo.png.jpg" alt="Al-Balqa' Applied University">
+                            <img src="assets/bau_logo.png" alt="Al-Balqa' Applied University">
                         </a>
                     </div>
                 </div>
@@ -1988,4 +2001,3 @@
     </script>
 </body>
 </html>
-
