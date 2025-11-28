@@ -738,29 +738,54 @@
         .timeline-content p { font-size: 0.95rem; color: var(--text-muted); }
 
         /* =========================================
-           7.5. INTERVIEW SECTION
+           7.5. KEYNOTES SECTION (New)
            ========================================= */
-        #interview {
+        #keynotes {
             padding: var(--section-padding);
             background-color: var(--bg-panel);
         }
 
-        .video-container {
-            max-width: 900px;
-            margin: 0 auto;
-            position: relative;
-            border: 1px solid rgba(255, 106, 0, 0.2);
-            background: var(--bg-card);
-            padding: 10px;
-            border-radius: 8px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        .media-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
         }
 
-        video {
+        .media-item {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 106, 0, 0.2);
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 0 15px rgba(0,0,0,0.3);
+            transition: var(--transition-fast);
+        }
+
+        .media-item:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-accent);
+        }
+
+        .media-item img, .media-item video {
             width: 100%;
-            height: auto;
+            height: 100%;
+            object-fit: cover;
             display: block;
-            border-radius: 4px;
+            min-height: 250px; /* Ensures consistent height */
+        }
+        
+        .media-label {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 10px;
+            background: rgba(0,0,0,0.7);
+            color: var(--text-highlight);
+            font-family: var(--font-code);
+            font-size: 0.9rem;
+            text-align: center;
         }
 
         /* =========================================
@@ -1144,7 +1169,7 @@
                 <li><a href="#skills" class="nav-link">Tech Stack</a></li>
                 <li><a href="#projects" class="nav-link">Projects</a></li>
                 <li><a href="#experience" class="nav-link">Experience</a></li>
-                <li><a href="#interview" class="nav-link">Interview</a></li>
+                <li><a href="#keynotes" class="nav-link">Keynotes</a></li>
                 <li><a href="#contact" class="nav-link">Contact</a></li>
                 <li><a href="assets/saif updated CV Jul 2025.pdf" class="nav-link" download>Download CV</a></li>
             </ul>
@@ -1179,7 +1204,7 @@
     <!-- Trusted By / Marquee Section -->
     <section id="trusted-by">
         <div class="marquee-container">
-            <h4 class="marquee-title">Trusted By </h4>
+            <h4 class="marquee-title">Trusted by Industry Leaders</h4>
             <div class="marquee">
                 <div class="marquee-track">
                     <!-- Logos - Set 1 -->
@@ -1190,7 +1215,7 @@
                     </div>
                     <div class="partner-logo">
                         <a href="https://www.autodesk.com" target="_blank" title="Autodesk">
-                            <img src="assets/autodesk_logo.png.png" alt="Autodesk">
+                            <img src="assets/autodesk_logo.png" alt="Autodesk">
                         </a>
                     </div>
                     <div class="partner-logo">
@@ -1205,7 +1230,7 @@
                     </div>
                     <div class="partner-logo">
                         <a href="https://www.bau.edu.jo" target="_blank" title="Al-Balqa' Applied University">
-                            <img src="assets/bau_logo.png.jpg" alt="Al-Balqa' Applied University">
+                            <img src="assets/bau_logo.png" alt="Al-Balqa' Applied University">
                         </a>
                     </div>
 
@@ -1217,7 +1242,7 @@
                     </div>
                     <div class="partner-logo">
                         <a href="https://www.autodesk.com" target="_blank" title="Autodesk">
-                            <img src="assets/autodesk_logo.png.png" alt="Autodesk">
+                            <img src="assets/autodesk_logo.png" alt="Autodesk">
                         </a>
                     </div>
                     <div class="partner-logo">
@@ -1232,7 +1257,7 @@
                     </div>
                     <div class="partner-logo">
                         <a href="https://www.bau.edu.jo" target="_blank" title="Al-Balqa' Applied University">
-                            <img src="assets/bau_logo.png.jpg" alt="Al-Balqa' Applied University">
+                            <img src="assets/bau_logo.png" alt="Al-Balqa' Applied University">
                         </a>
                     </div>
 
@@ -1244,7 +1269,7 @@
                     </div>
                     <div class="partner-logo">
                         <a href="https://www.autodesk.com" target="_blank" title="Autodesk">
-                            <img src="assets/autodesk_logo.png.png" alt="Autodesk">
+                            <img src="assets/autodesk_logo.png" alt="Autodesk">
                         </a>
                     </div>
                     <div class="partner-logo">
@@ -1259,7 +1284,7 @@
                     </div>
                     <div class="partner-logo">
                         <a href="https://www.bau.edu.jo" target="_blank" title="Al-Balqa' Applied University">
-                            <img src="assets/bau_logo.png.jpg" alt="Al-Balqa' Applied University">
+                            <img src="assets/bau_logo.png" alt="Al-Balqa' Applied University">
                         </a>
                     </div>
                 </div>
@@ -1270,7 +1295,7 @@
     <!-- Software Arsenal Marquee (New) -->
     <section id="software-arsenal">
         <div class="marquee-container">
-            <h4 class="marquee-title">Used Software</h4>
+            <h4 class="marquee-title">Software Arsenal</h4>
             <div class="marquee">
                 <div class="marquee-track reverse">
                     <!-- Logos - Set 1 -->
@@ -1567,6 +1592,30 @@
                     </div>
                 </div>
 
+                <!-- Project 4: 1U Cubesat -->
+                <div class="project-card reveal" data-category="hw">
+                    <div class="project-image">
+                        <!-- Reverted to local asset -->
+                        <img src="assets/cubesat.jpg" alt="1U Cubesat" onerror="this.src='https://via.placeholder.com/600x400?text=Cubesat'">
+                        <i class="fas fa-satellite project-icon"></i>
+                    </div>
+                    <div class="project-info">
+                        <div class="project-tags">Fusion 360 | Altium | RPi</div>
+                        <h3 class="project-title">1U Cubesat</h3>
+                        <p class="project-desc">
+                            Tiny satellite. Big impact. Designed for compact orbital missions with integrated power and telemetry systems.
+                        </p>
+                        <div class="project-links">
+                            <a href="#" class="project-link">Read More</a>
+                            <div class="project-tools-icons">
+                                <img src="assets/Altuim logo2.png" class="tool-icon-small" title="Altium">
+                                <img src="assets/Fusion360_Logo.png" class="tool-icon-small" title="Fusion 360">
+                                <img src="assets/rasberry.png" class="tool-icon-small" title="Raspberry Pi">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Project 5: F450 DJI Replica -->
                 <div class="project-card reveal" data-category="robotics">
                     <div class="project-image">
@@ -1644,19 +1693,44 @@
         </div>
     </section>
 
-    <!-- Interview Section -->
-    <section id="interview">
+    <!-- Keynotes Section (Updated) -->
+    <section id="keynotes">
         <div class="container">
             <div class="section-header reveal">
-                <h2 class="section-title">Interview</h2>
-                <span class="section-subtitle">Insights & Vision</span>
+                <h2 class="section-title">Keynotes & Achievements</h2>
+                <span class="section-subtitle">Vision & Impact</span>
             </div>
 
-            <div class="video-container reveal">
-                <video controls>
-                    <source src="assets/roya.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
+            <div class="media-grid">
+                <!-- Video 1 (Original Interview) -->
+                <div class="media-item reveal">
+                    <video controls>
+                        <source src="assets/roya.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div class="media-label">Industry Interview</div>
+                </div>
+
+                <!-- Image 1 (Placeholder) -->
+                <div class="media-item reveal">
+                    <img src="assets/achievement1.jpg" alt="Achievement 1" onerror="this.src='https://via.placeholder.com/400x300?text=Keynote+Photo'">
+                    <div class="media-label">Conference Keynote</div>
+                </div>
+
+                <!-- Video 2 (Placeholder) -->
+                <div class="media-item reveal">
+                    <video controls poster="assets/video_poster.jpg">
+                        <source src="assets/demo_reel.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <div class="media-label">Project Demo Reel</div>
+                </div>
+
+                <!-- Image 2 (Placeholder) -->
+                <div class="media-item reveal">
+                    <img src="assets/achievement2.jpg" alt="Achievement 2" onerror="this.src='https://via.placeholder.com/400x300?text=Award+Photo'">
+                    <div class="media-label">Award Ceremony</div>
+                </div>
             </div>
         </div>
     </section>
