@@ -67,6 +67,46 @@
             overflow-x: hidden;
         }
 
+        /* =========================================
+           LOADING SCREEN STYLES
+           ========================================= */
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-dark);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.8s ease-out; /* Smooth fade out */
+        }
+
+        .loader-content {
+            text-align: center;
+        }
+
+        .loader-title {
+            font-family: var(--font-header);
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            color: var(--text-highlight);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            animation: pulse-text 2s infinite ease-in-out;
+        }
+
+        .loader-title span {
+            color: var(--primary-accent);
+        }
+
+        @keyframes pulse-text {
+            0% { opacity: 0.3; transform: scale(0.95); }
+            50% { opacity: 1; transform: scale(1.05); text-shadow: 0 0 20px var(--primary-accent); }
+            100% { opacity: 0.3; transform: scale(0.95); }
+        }
+
         a {
             text-decoration: none;
             color: inherit;
@@ -1298,6 +1338,13 @@
 </head>
 <body>
 
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="loader-content">
+            <h1 class="loader-title">Saif <span>Khafajah</span></h1>
+        </div>
+    </div>
+
     <!-- Navigation -->
     <nav id="navbar">
         <div class="container nav-container">
@@ -1349,7 +1396,7 @@
     <!-- Trusted By / Marquee Section -->
     <section id="trusted-by">
         <div class="marquee-container">
-            <h4 class="marquee-title">Trusted By</h4>
+            <h4 class="marquee-title">Trusted by Industry Leaders</h4>
             <div class="marquee">
                 <div class="marquee-track">
                     <!-- Logos - Set 1 -->
@@ -1440,7 +1487,7 @@
     <!-- Software Arsenal Marquee (New) -->
     <section id="software-arsenal">
         <div class="marquee-container">
-            <h4 class="marquee-title">Used Softwares </h4>
+            <h4 class="marquee-title">Software Arsenal</h4>
             <div class="marquee">
                 <div class="marquee-track reverse">
                     <!-- Logos - Set 1 -->
@@ -1568,7 +1615,7 @@
                     <div class="skill-bar-wrapper">
                         <div class="skill-info">
                             <span>STM32 / ESP32</span>
-                            <span>90%</span>
+                            <span>95%</span>
                         </div>
                         <div class="progress-bg"><div class="progress-fill" data-width="95%"></div></div>
                     </div>
@@ -1576,7 +1623,7 @@
                     <div class="skill-bar-wrapper">
                         <div class="skill-info">
                             <span>AVR (Arduino/ATmega)</span>
-                            <span>95%</span>
+                            <span>90%</span>
                         </div>
                         <div class="progress-bg"><div class="progress-fill" data-width="90%"></div></div>
                     </div>
@@ -1596,7 +1643,7 @@
                     <div class="skill-bar-wrapper">
                         <div class="skill-info">
                             <span>ROS / ROS 2</span>
-                            <span>70%</span>
+                            <span>90%</span>
                         </div>
                         <div class="progress-bg"><div class="progress-fill" data-width="90%"></div></div>
                     </div>
@@ -1632,7 +1679,7 @@
                     <div class="skill-bar-wrapper">
                         <div class="skill-info">
                             <span>SolidWorks / Fusion 360</span>
-                            <span>95%</span>
+                            <span>80%</span>
                         </div>
                         <div class="progress-bg"><div class="progress-fill" data-width="80%"></div></div>
                     </div>
@@ -1737,6 +1784,30 @@
                     </div>
                 </div>
 
+                <!-- Project 4: 1U Cubesat -->
+                <div class="project-card reveal" data-category="hw">
+                    <div class="project-image">
+                        <!-- Reverted to local asset -->
+                        <img src="assets/cubesat.jpg" alt="1U Cubesat" onerror="this.src='https://via.placeholder.com/600x400?text=Cubesat'">
+                        <i class="fas fa-satellite project-icon"></i>
+                    </div>
+                    <div class="project-info">
+                        <div class="project-tags">Fusion 360 | Altium | RPi</div>
+                        <h3 class="project-title">1U Cubesat</h3>
+                        <p class="project-desc">
+                            Tiny satellite. Big impact. Designed for compact orbital missions with integrated power and telemetry systems.
+                        </p>
+                        <div class="project-links">
+                            <a href="#" class="project-link">Read More</a>
+                            <div class="project-tools-icons">
+                                <img src="assets/Altuim logo2.png" class="tool-icon-small" title="Altium">
+                                <img src="assets/Fusion360_Logo.png" class="tool-icon-small" title="Fusion 360">
+                                <img src="assets/rasberry.png" class="tool-icon-small" title="Raspberry Pi">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Project 5: F450 DJI Replica -->
                 <div class="project-card reveal" data-category="robotics">
                     <div class="project-image">
@@ -1745,7 +1816,7 @@
                         <i class="fas fa-plane project-icon"></i>
                     </div>
                     <div class="project-info">
-                        <div class="project-tags">CAD| Perception</div>
+                        <div class="project-tags">Isaac Sim | Perception</div>
                         <h3 class="project-title">F450 DJI Replica</h3>
                         <p class="project-desc">
                             A custom-built replica of the DJI F450 quadcopter, designed to replicate its stability, flight performance, and versatility for aerial missions and experimentation.
@@ -1788,8 +1859,8 @@
                 <!-- Job 2 -->
                 <div class="timeline-item right reveal">
                     <div class="timeline-content">
-                        <span class="timeline-date">2023 - Present </span>
-                        <h3>Robotics Engineer Intern</h3>
+                        <span class="timeline-date">2023 - 2024</span>
+                        <h3>Robotics Intern</h3>
                         <h4>Orange Jordan</h4>
                         <p>
                             <strong>Mars Jo Rover:</strong> Fabrication Team Leader & Hardware Engineer.<br>
@@ -1826,36 +1897,31 @@
                 <!-- Video 1 (Original Interview) -->
                 <div class="media-item reveal">
                     <video controls>
-                        <source src="assets/roya.mp4" type="video/mp4">
+                        <source src="assets/interview.mp4" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
-                    <div class="media-label">Roya TV Interview</div>
+                    <div class="media-label">Industry Interview</div>
                 </div>
 
                 <!-- Image 1 (Placeholder) -->
                 <div class="media-item reveal">
-                    <img src="assets/marsrover.jpg" alt="Achievement 1" onerror="this.src='https://via.placeholder.com/400x300?text=Keynote+Photo'">
-                    <div class="media-label">Sofex 2024 </div>
+                    <img src="assets/achievement1.jpg" alt="Achievement 1" onerror="this.src='https://via.placeholder.com/400x300?text=Keynote+Photo'">
+                    <div class="media-label">Conference Keynote</div>
                 </div>
 
                 <!-- Video 2 (Placeholder) -->
                 <div class="media-item reveal">
                     <video controls poster="assets/video_poster.jpg">
-                        <source src="assets/Sight.mp4" type="video/mp4">
+                        <source src="assets/demo_reel.mp4" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
-                    <div class="media-label">R8 Best IEEE SIGHT Group leader</div>
+                    <div class="media-label">Project Demo Reel</div>
                 </div>
 
-                 <!-- Video 2 (Placeholder) -->
+                <!-- Image 2 (Placeholder) -->
                 <div class="media-item reveal">
-                    <video controls poster="assets/video_poster.jpg">
-                        <source src="assets/jimex.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
-                    <div class="media-label">JIMEX 2024 </div>
-                </div>
-                
+                    <img src="assets/achievement2.jpg" alt="Achievement 2" onerror="this.src='https://via.placeholder.com/400x300?text=Award+Photo'">
+                    <div class="media-label">Award Ceremony</div>
                 </div>
             </div>
         </div>
@@ -1873,7 +1939,7 @@
                 <!-- Service 1: Training -->
                 <div class="service-card reveal">
                     <div class="service-img-wrapper">
-                        <img src="assets/course.jpg" alt="Training" onerror="this.src='https://images.unsplash.com/photo-1524178232363-1fb2b075b655?fit=crop&w=500&q=80'">
+                        <img src="assets/service_training.jpg" alt="Training" onerror="this.src='https://images.unsplash.com/photo-1524178232363-1fb2b075b655?fit=crop&w=500&q=80'">
                     </div>
                     <div class="service-content-inner">
                         <h3><i class="fas fa-chalkboard-teacher"></i> Training</h3>
@@ -1892,7 +1958,7 @@
                 <!-- Service 2: Prototyping -->
                 <div class="service-card reveal">
                     <div class="service-img-wrapper">
-                        <img src="assets/prototyping.jpg" alt="Prototyping" onerror="this.src='https://images.unsplash.com/photo-1581092921461-eab62e97a783?fit=crop&w=500&q=80'">
+                        <img src="assets/service_prototyping.jpg" alt="Prototyping" onerror="this.src='https://images.unsplash.com/photo-1581092921461-eab62e97a783?fit=crop&w=500&q=80'">
                     </div>
                     <div class="service-content-inner">
                         <h3><i class="fas fa-tools"></i> Prototyping</h3>
@@ -1910,7 +1976,7 @@
                 <!-- Service 3: Mechanical Design -->
                 <div class="service-card reveal">
                     <div class="service-img-wrapper">
-                        <img src="assets/arm4.jpg" alt="Mechanical Design" onerror="this.src='https://images.unsplash.com/photo-1537462713205-e513d5563d10?fit=crop&w=500&q=80'">
+                        <img src="assets/service_mechanical.jpg" alt="Mechanical Design" onerror="this.src='https://images.unsplash.com/photo-1537462713205-e513d5563d10?fit=crop&w=500&q=80'">
                     </div>
                     <div class="service-content-inner">
                         <h3><i class="fas fa-cogs"></i> Mechanical Design</h3>
@@ -1928,7 +1994,7 @@
                 <!-- Service 4: PCB Design -->
                 <div class="service-card reveal">
                     <div class="service-img-wrapper">
-                        <img src="assets/pcb.jpg" alt="PCB Design" onerror="this.src='https://images.unsplash.com/photo-1555664424-778a18a21c60?fit=crop&w=500&q=80'">
+                        <img src="assets/service_pcb.jpg" alt="PCB Design" onerror="this.src='https://images.unsplash.com/photo-1555664424-778a18a21c60?fit=crop&w=500&q=80'">
                     </div>
                     <div class="service-content-inner">
                         <h3><i class="fas fa-microchip"></i> PCB Design</h3>
@@ -1945,7 +2011,7 @@
                 <!-- Service 5: ROS Developing -->
                 <div class="service-card reveal">
                     <div class="service-img-wrapper">
-                        <img src="assets/swarm.png" alt="ROS Development" onerror="this.src='https://images.unsplash.com/photo-1485827404703-89b55fcc595e?fit=crop&w=500&q=80'">
+                        <img src="assets/service_ros.jpg" alt="ROS Development" onerror="this.src='https://images.unsplash.com/photo-1485827404703-89b55fcc595e?fit=crop&w=500&q=80'">
                     </div>
                     <div class="service-content-inner">
                         <h3><i class="fas fa-code-branch"></i> ROS Development</h3>
@@ -1963,7 +2029,7 @@
                 <!-- Service 6: Embedded Systems -->
                 <div class="service-card reveal">
                     <div class="service-img-wrapper">
-                        <img src="assets/Quadpcb.JPG" alt="Embedded Systems" onerror="this.src='https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?fit=crop&w=500&q=80'">
+                        <img src="assets/service_embedded.jpg" alt="Embedded Systems" onerror="this.src='https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?fit=crop&w=500&q=80'">
                     </div>
                     <div class="service-content-inner">
                         <h3><i class="fas fa-laptop-code"></i> Embedded Systems</h3>
@@ -2347,9 +2413,23 @@
             }, 1500);
         });
 
+        function hideLoader() {
+            const loader = document.getElementById('loading-screen');
+            if (loader) {
+                loader.style.opacity = '0';
+                setTimeout(() => {
+                    loader.style.display = 'none';
+                }, 500);
+            }
+        }
+
+        window.addEventListener('load', () => {
+            setTimeout(hideLoader, 3000);
+        });
+
+        // Backup safety timeout (4 seconds)
+        setTimeout(hideLoader, 4000);
+
     </script>
 </body>
 </html>
-
-
-
