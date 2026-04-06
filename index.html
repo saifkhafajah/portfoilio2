@@ -1,4 +1,4 @@
-d<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -20,9 +20,10 @@ d<!DOCTYPE html>
            ========================================= */
         :root {
             /* Color Palette - Orange/Dark Theme */
-            --bg-dark: #0A0A0A;
-            --bg-panel: #141414; 
-            --bg-card: #1A1A1A;
+            --bg-dark-solid: #0A0A0A; /* Used for the deepest layer */
+            --bg-dark: rgba(10, 10, 10, 0.85); /* Translucent to show cinematic background */
+            --bg-panel: rgba(20, 20, 20, 0.85); 
+            --bg-card: rgba(26, 26, 26, 0.9);
             
             --primary-accent: #FF6A00; /* Primary Orange */
             --secondary-accent: #FFC764; /* Highlight/Accent Gold */
@@ -60,11 +61,74 @@ d<!DOCTYPE html>
         }
 
         body {
-            background-color: var(--bg-dark);
+            background-color: var(--bg-dark-solid);
             color: var(--text-main);
             font-family: var(--font-body);
             line-height: 1.6;
             overflow-x: hidden;
+        }
+
+        /* Ensure sections float above the fixed background and apply glass blur */
+        section, footer, #trusted-by, #software-arsenal {
+            position: relative;
+            z-index: 2;
+        }
+        
+        section:not(#hero), footer, #trusted-by, #software-arsenal {
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        /* =========================================
+           1.5 CINEMATIC BACKGROUND STYLES
+           ========================================= */
+        .fixed-bg-wrapper {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+            background-color: var(--bg-dark-solid);
+        }
+        
+        #hero-media-container {
+            position: absolute;
+            top: -5%;
+            left: -5%;
+            width: 110%;
+            height: 110%;
+            will-change: transform;
+        }
+
+        .hero-pose {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 30%;
+        }
+
+        /* Custom Orange/Gold Neon Lighting adapted for Saif's Theme */
+        .neon-lighting-color {
+            position: absolute; inset: 0; z-index: 1; pointer-events: none;
+            background: linear-gradient(90deg, rgba(255, 106, 0, 0.4) 0%, rgba(0,0,0,0) 50%, rgba(255, 199, 100, 0.3) 100%);
+            mix-blend-mode: color;
+        }
+        
+        .neon-lighting-overlay {
+            position: absolute; inset: 0; z-index: 2; pointer-events: none;
+            background: linear-gradient(90deg, rgba(255, 106, 0, 0.2) 0%, rgba(0,0,0,0) 50%, rgba(255, 199, 100, 0.15) 100%);
+            mix-blend-mode: overlay;
+        }
+        
+        .bg-dark-overlay {
+            position: absolute; inset: 0; background: rgba(0,0,0,0.6); z-index: 3; pointer-events: none;
+        }
+        
+        .bottom-gradient {
+            position: absolute; inset: 0; z-index: 4; pointer-events: none;
+            background: linear-gradient(to top, var(--bg-dark-solid) 0%, rgba(10,10,10,0.5) 20%, transparent 100%);
         }
 
         /* =========================================
@@ -76,12 +140,12 @@ d<!DOCTYPE html>
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: var(--bg-dark);
+            background-color: var(--bg-dark-solid);
             z-index: 9999;
             display: flex;
             justify-content: center;
             align-items: center;
-            transition: opacity 0.8s ease-out; /* Smooth fade out */
+            transition: opacity 0.8s ease-out;
         }
 
         .loader-content {
@@ -140,7 +204,7 @@ d<!DOCTYPE html>
 
         .section-title {
             font-family: var(--font-header);
-            font-size: clamp(1.8rem, 5vw, 2.5rem); /* Responsive font sizing */
+            font-size: clamp(1.8rem, 5vw, 2.5rem); 
             color: var(--text-highlight);
             text-transform: uppercase;
             letter-spacing: 2px;
@@ -163,8 +227,8 @@ d<!DOCTYPE html>
             font-family: var(--font-code);
             color: var(--primary-accent);
             font-size: 1rem;
-            display: block; /* Forces the orange text to the next line */
-            margin-top: 15px; /* Adds space between the orange line and the text */
+            display: block;
+            margin-top: 15px; 
         }
 
         .btn {
@@ -222,7 +286,7 @@ d<!DOCTYPE html>
             padding: 20px 0;
             z-index: 1000;
             transition: var(--transition-medium);
-            background: transparent; /* Start transparent */
+            background: transparent; 
         }
 
         #navbar.scrolled {
@@ -299,15 +363,7 @@ d<!DOCTYPE html>
             justify-content: center;
             overflow: hidden;
             padding-top: 0; 
-        }
-
-        #canvas-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
+            background: transparent !important; /* Forces the fixed background to show completely */
         }
 
         .hero-content {
@@ -323,14 +379,16 @@ d<!DOCTYPE html>
             font-size: 1.2rem;
             margin-bottom: 15px;
             display: block;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.8); /* Ensures readability over image */
         }
 
         .hero-title {
             font-family: var(--font-header);
-            font-size: clamp(2rem, 7vw, 4rem); /* Fluid scaling for mobile */
+            font-size: clamp(2rem, 7vw, 4rem);
             line-height: 1.1;
             color: var(--text-highlight);
             margin-bottom: 20px;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.5);
         }
 
         .hero-title span {
@@ -341,9 +399,10 @@ d<!DOCTYPE html>
         .typewriter {
             font-family: var(--font-code);
             font-size: clamp(1rem, 4vw, 1.5rem);
-            color: var(--text-muted);
+            color: var(--text-highlight);
             min-height: 1.5em;
             margin-bottom: 40px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
         }
 
         .cursor {
@@ -384,8 +443,6 @@ d<!DOCTYPE html>
             padding: 40px 0;
             overflow: hidden;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            position: relative;
-            z-index: 2;
         }
         
         #software-arsenal {
@@ -393,8 +450,6 @@ d<!DOCTYPE html>
             padding: 30px 0;
             overflow: hidden;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            position: relative;
-            z-index: 2;
         }
 
         .marquee-container {
@@ -431,7 +486,6 @@ d<!DOCTYPE html>
         .marquee::before { left: 0; background: linear-gradient(to right, var(--bg-panel), transparent); }
         .marquee::after { right: 0; background: linear-gradient(to left, var(--bg-panel), transparent); }
         
-        /* Adjust gradient for the darker software section */
         #software-arsenal .marquee::before { background: linear-gradient(to right, var(--bg-dark), transparent); }
         #software-arsenal .marquee::after { background: linear-gradient(to left, var(--bg-dark), transparent); }
 
@@ -441,7 +495,6 @@ d<!DOCTYPE html>
             animation: scroll 40s linear infinite;
         }
         
-        /* Reverse scroll for software bar */
         .marquee-track.reverse {
             animation: scroll-reverse 40s linear infinite;
         }
@@ -463,21 +516,16 @@ d<!DOCTYPE html>
             text-decoration: none;
         }
 
-        /* Default style for logos */
         .partner-logo img {
             height: 50px; 
             width: auto;
             max-width: 150px;
             object-fit: contain;
-            /* Changed to simple grayscale so block logos don't turn into white squares */
             filter: grayscale(100%) opacity(0.7); 
             transition: all 0.3s ease;
         }
 
-        .partner-logo:hover {
-            opacity: 1;
-        }
-
+        .partner-logo:hover { opacity: 1; }
         .partner-logo:hover img {
             filter: none; 
             transform: scale(1.1);
@@ -604,7 +652,6 @@ d<!DOCTYPE html>
         #skills {
             background-color: var(--bg-panel);
             padding: var(--section-padding);
-            position: relative;
         }
 
         #skills::before {
@@ -635,7 +682,6 @@ d<!DOCTYPE html>
         }
 
         .skill-category h3 i { color: var(--primary-accent); }
-
         .skill-bar-wrapper { margin-bottom: 20px; }
 
         .skill-info {
@@ -657,7 +703,7 @@ d<!DOCTYPE html>
         .progress-fill {
             height: 100%;
             background: linear-gradient(90deg, var(--primary-accent), var(--tertiary-accent));
-            width: 0; /* Animated via JS */
+            width: 0; 
             transition: width 1.5s cubic-bezier(0.1, 0.7, 1.0, 0.1);
             position: relative;
         }
@@ -692,7 +738,7 @@ d<!DOCTYPE html>
 
         .tech-tag:hover {
             background: var(--primary-accent);
-            color: var(--bg-dark);
+            color: var(--bg-dark-solid);
         }
 
         /* =========================================
@@ -723,7 +769,7 @@ d<!DOCTYPE html>
         .timeline-item {
             padding: 10px 40px;
             position: relative;
-            background-color: inherit;
+            background-color: transparent;
             width: 50%;
         }
 
@@ -736,7 +782,7 @@ d<!DOCTYPE html>
             width: 16px;
             height: 16px;
             right: -8px;
-            background-color: var(--bg-dark);
+            background-color: var(--bg-dark-solid);
             border: 2px solid var(--secondary-accent);
             top: 20px;
             border-radius: 50%;
@@ -829,7 +875,7 @@ d<!DOCTYPE html>
         }
 
         /* =========================================
-           7.7. SERVICES SECTION (NEW)
+           7.7. SERVICES SECTION
            ========================================= */
         #services {
             padding: var(--section-padding);
@@ -846,7 +892,6 @@ d<!DOCTYPE html>
             background: var(--bg-card);
             border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 12px;
-            /* padding: 30px;  Removed padding to let image fit flush */
             transition: var(--transition-medium);
             display: flex;
             flex-direction: column;
@@ -860,7 +905,6 @@ d<!DOCTYPE html>
             box-shadow: 0 10px 30px rgba(255, 106, 0, 0.1);
         }
 
-        /* Glow effect on hover */
         .service-card::before {
             content: '';
             position: absolute;
@@ -875,9 +919,7 @@ d<!DOCTYPE html>
             z-index: 2;
         }
 
-        .service-card:hover::before {
-            transform: scaleX(1);
-        }
+        .service-card:hover::before { transform: scaleX(1); }
         
         .service-img-wrapper {
             width: 100%;
@@ -893,11 +935,8 @@ d<!DOCTYPE html>
             transition: transform 0.5s ease;
         }
         
-        .service-card:hover .service-img-wrapper img {
-            transform: scale(1.1);
-        }
+        .service-card:hover .service-img-wrapper img { transform: scale(1.1); }
         
-        /* Overlay to darken image slightly so text/icons pop if needed, though mostly decorative here */
         .service-img-wrapper::after {
             content: '';
             position: absolute;
@@ -934,7 +973,7 @@ d<!DOCTYPE html>
             font-size: 0.95rem;
             color: var(--text-muted);
             margin-bottom: 30px;
-            flex-grow: 1; /* Pushes footer to bottom */
+            flex-grow: 1; 
         }
 
         .service-tools {
@@ -952,10 +991,7 @@ d<!DOCTYPE html>
             margin-right: auto;
         }
 
-        .toolbox-icons {
-            display: flex;
-            gap: 10px;
-        }
+        .toolbox-icons { display: flex; gap: 10px; }
 
         .toolbox-icon {
             width: 24px;
@@ -1007,7 +1043,6 @@ d<!DOCTYPE html>
 
         .projects-grid {
             display: grid;
-            /* Changed minmax to 250px for safer mobile fit */
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             gap: 30px;
         }
@@ -1044,11 +1079,8 @@ d<!DOCTYPE html>
             transition: transform 0.5s ease;
         }
         
-        .project-card:hover .project-image img {
-            transform: scale(1.05);
-        }
+        .project-card:hover .project-image img { transform: scale(1.05); }
 
-        /* Overlay for project images */
         .project-image::after {
             content: '';
             position: absolute;
@@ -1111,7 +1143,7 @@ d<!DOCTYPE html>
             display: flex;
             align-items: center;
             gap: 10px;
-            margin-left: auto; /* Push to right */
+            margin-left: auto; 
         }
         
         .tool-icon-small {
@@ -1204,7 +1236,7 @@ d<!DOCTYPE html>
             color: var(--text-highlight);
             font-family: var(--font-body);
             transition: var(--transition-fast);
-            font-size: 16px; /* Prevents auto-zoom on iOS */
+            font-size: 16px; 
         }
 
         .form-control:focus {
@@ -1300,17 +1332,14 @@ d<!DOCTYPE html>
             
             .hero-greeting { font-size: 1rem; }
             
-            /* Stacking title for mobile and making span solid orange */
             .hero-title span {
-                display: inline; /* Keep on same line */
+                display: inline; 
                 color: var(--primary-accent);
                 -webkit-text-stroke: 0;
             }
             
-            /* Reduce marquee fade on small screens so more logos are visible */
             .marquee::before, .marquee::after { width: 50px; }
             
-            /* Timeline fixes for mobile */
             .timeline::after { left: 31px; }
             .timeline-item { width: 100%; padding-left: 70px; padding-right: 20px; }
             .timeline-item::after { left: 22px; }
@@ -1345,6 +1374,23 @@ d<!DOCTYPE html>
         </div>
     </div>
 
+    <!-- FIXED CINEMATIC BACKGROUND -->
+    <div class="fixed-bg-wrapper">
+        <!-- Background Image Container (Parallax & Zoom target) -->
+        <div id="hero-media-container">
+            <!-- Single Continuous Zooming Portrait -->
+            <img src="assets/saifkhafajah.jpeg" alt="Saif Khafajah" class="hero-pose" style="object-position: center 30%;">
+            
+            <!-- Cinematic Orange/Gold Lighting Overlays -->
+            <div class="neon-lighting-color"></div>
+            <div class="neon-lighting-overlay"></div>
+        </div>
+
+        <!-- Dark overlay to ensure text readability across the whole page -->
+        <div class="bg-dark-overlay"></div>
+        <div class="bottom-gradient"></div>
+    </div>
+
     <!-- Navigation -->
     <nav id="navbar">
         <div class="container nav-container">
@@ -1368,12 +1414,8 @@ d<!DOCTYPE html>
         </div>
     </nav>
 
-    <!-- Hero Section with Canvas Background -->
+    <!-- Transparent Hero Section (Reveals the background) -->
     <section id="hero">
-        <div id="canvas-container">
-            <!-- Canvas inserted by JS -->
-        </div>
-        
         <div class="hero-content">
             <span class="hero-greeting">Hello World, I am</span>
             <h1 class="hero-title">Saif <span>Khafajah</span></h1>
@@ -1484,7 +1526,7 @@ d<!DOCTYPE html>
         </div>
     </section>
     
-    <!-- Software Arsenal Marquee (New) -->
+    <!-- Software Arsenal Marquee -->
     <section id="software-arsenal">
         <div class="marquee-container">
             <h4 class="marquee-title">Used Softwares</h4>
@@ -1565,7 +1607,6 @@ d<!DOCTYPE html>
             <div class="about-grid">
                 <div class="about-img-wrapper reveal">
                     <div class="profile-image">
-                        <!-- Reverted to local asset -->
                         <img src="assets/saifkhafajah.jpeg" alt="Saif Khafajah" onerror="this.src='https://via.placeholder.com/400x400.png?text=Saif+Khafajah'">
                     </div>
                 </div>
@@ -1716,7 +1757,6 @@ d<!DOCTYPE html>
                 <!-- Project 1: Mars jo rover -->
                 <div class="project-card reveal" data-category="hw robotics">
                     <div class="project-image">
-                        <!-- Reverted to local asset -->
                         <img src="assets/mars rover sofex.jpeg" alt="Mars jo rover" onerror="this.src='https://via.placeholder.com/600x400?text=Mars+Rover'">
                         <i class="fas fa-space-shuttle project-icon"></i>
                     </div>
@@ -1739,7 +1779,6 @@ d<!DOCTYPE html>
                 <!-- Project 2: Quadcopter pcb controller -->
                 <div class="project-card reveal" data-category="hw">
                     <div class="project-image">
-                        <!-- Reverted to local asset -->
                         <img src="assets/Quadpcb.JPG" alt="Quadcopter PCB" onerror="this.src='https://via.placeholder.com/600x400?text=Quadcopter+PCB'">
                         <i class="fas fa-microchip project-icon"></i>
                     </div>
@@ -1763,7 +1802,6 @@ d<!DOCTYPE html>
                 <!-- Project 3: 5 DOF Robot Arm -->
                 <div class="project-card reveal" data-category="ros robotics">
                     <div class="project-image">
-                        <!-- Reverted to local asset -->
                         <img src="assets/armo.jpeg" alt="5 DOF Robot Arm" onerror="this.src='https://via.placeholder.com/600x400?text=Robot+Arm'">
                         <i class="fas fa-code-branch project-icon"></i>
                     </div>
@@ -1784,12 +1822,9 @@ d<!DOCTYPE html>
                     </div>
                 </div>
 
-             
-
                 <!-- Project 5: F450 DJI Replica -->
                 <div class="project-card reveal" data-category="robotics">
                     <div class="project-image">
-                        <!-- Reverted to local asset -->
                         <img src="assets/f450.jpeg" alt="F450 DJI Replica" onerror="this.src='https://via.placeholder.com/600x400?text=F450+Replica'">
                         <i class="fas fa-plane project-icon"></i>
                     </div>
@@ -1863,7 +1898,7 @@ d<!DOCTYPE html>
         </div>
     </section>
 
-    <!-- Keynotes Section (Updated) -->
+    <!-- Keynotes Section -->
     <section id="keynotes">
         <div class="container">
             <div class="section-header reveal">
@@ -1872,9 +1907,8 @@ d<!DOCTYPE html>
             </div>
 
             <div class="media-grid">
-                <!-- Video 1 (Original Interview) -->
+                <!-- Video 1 -->
                 <div class="media-item reveal">
-                    <!-- Added preload and time seek to force thumbnail generation -->
                     <video controls preload="metadata">
                         <source src="assets/roya.mp4#t=0.1" type="video/mp4">
                         Your browser does not support the video tag.
@@ -1882,15 +1916,14 @@ d<!DOCTYPE html>
                     <div class="media-label">Roya TV Interview</div>
                 </div>
 
-                <!-- Image 1 (Placeholder) -->
+                <!-- Image 1 -->
                 <div class="media-item reveal">
                     <img src="assets/marsrover.jpg" alt="Achievement 1" onerror="this.src='https://via.placeholder.com/400x300?text=Keynote+Photo'">
                     <div class="media-label">Sofex 2024 </div>
                 </div>
 
-                <!-- Video 2 (Placeholder) -->
+                <!-- Video 2 -->
                 <div class="media-item reveal">
-                    <!-- Removed broken poster, added auto-thumbnail trick -->
                     <video controls preload="metadata">
                         <source src="assets/Sight.mp4#t=0.1" type="video/mp4">
                         Your browser does not support the video tag.
@@ -1898,9 +1931,8 @@ d<!DOCTYPE html>
                     <div class="media-label">R8 Best IEEE SIGHT Group leader</div>
                 </div>
 
-                 <!-- Video 3 (Placeholder) -->
+                 <!-- Video 3 -->
                 <div class="media-item reveal">
-                    <!-- Removed broken poster, added auto-thumbnail trick -->
                     <video controls preload="metadata">
                         <source src="assets/jimex.mp4#t=0.1" type="video/mp4">
                         Your browser does not support the video tag.
@@ -1920,7 +1952,7 @@ d<!DOCTYPE html>
             </div>
 
             <div class="services-grid">
-                <!-- Service 1: Training -->
+                <!-- Service 1 -->
                 <div class="service-card reveal">
                     <div class="service-img-wrapper">
                         <img src="assets/course.jpg" alt="Training" onerror="this.src='https://images.unsplash.com/photo-1524178232363-1fb2b075b655?fit=crop&w=500&q=80'">
@@ -1939,7 +1971,7 @@ d<!DOCTYPE html>
                     </div>
                 </div>
 
-                <!-- Service 2: Prototyping -->
+                <!-- Service 2 -->
                 <div class="service-card reveal">
                     <div class="service-img-wrapper">
                         <img src="assets/prototyping.jpg" alt="Prototyping" onerror="this.src='https://images.unsplash.com/photo-1581092921461-eab62e97a783?fit=crop&w=500&q=80'">
@@ -1957,7 +1989,7 @@ d<!DOCTYPE html>
                     </div>
                 </div>
 
-                <!-- Service 3: Mechanical Design -->
+                <!-- Service 3 -->
                 <div class="service-card reveal">
                     <div class="service-img-wrapper">
                         <img src="assets/arm4.jpg" alt="Mechanical Design" onerror="this.src='https://images.unsplash.com/photo-1537462713205-e513d5563d10?fit=crop&w=500&q=80'">
@@ -1975,7 +2007,7 @@ d<!DOCTYPE html>
                     </div>
                 </div>
 
-                <!-- Service 4: PCB Design -->
+                <!-- Service 4 -->
                 <div class="service-card reveal">
                     <div class="service-img-wrapper">
                         <img src="assets/pcb.jpg" alt="PCB Design" onerror="this.src='https://images.unsplash.com/photo-1555664424-778a18a21c60?fit=crop&w=500&q=80'">
@@ -1992,7 +2024,7 @@ d<!DOCTYPE html>
                     </div>
                 </div>
 
-                <!-- Service 5: ROS Developing -->
+                <!-- Service 5 -->
                 <div class="service-card reveal">
                     <div class="service-img-wrapper">
                         <img src="assets/swarm.png" alt="ROS Development" onerror="this.src='https://images.unsplash.com/photo-1485827404703-89b55fcc595e?fit=crop&w=500&q=80'">
@@ -2010,7 +2042,7 @@ d<!DOCTYPE html>
                     </div>
                 </div>
 
-                <!-- Service 6: Embedded Systems -->
+                <!-- Service 6 -->
                 <div class="service-card reveal">
                     <div class="service-img-wrapper">
                         <img src="assets/Quadpcb.JPG" alt="Embedded Systems" onerror="this.src='https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?fit=crop&w=500&q=80'">
@@ -2102,124 +2134,47 @@ d<!DOCTYPE html>
 
         /**
          * =========================================
-         * 1. PARTICLE NETWORK ANIMATION (CANVAS)
+         * 1. CINEMATIC BACKGROUND (PARALLAX & ZOOM)
          * =========================================
          */
-        const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');
-        const container = document.getElementById('canvas-container');
-        container.appendChild(canvas);
+        const heroContainer = document.getElementById('hero-media-container');
+        let targetX = 0, targetY = 0, currentX = 0, currentY = 0;
+        let targetZoom = 1, currentZoom = 1;
 
-        let width, height;
-        let particles = [];
-        
-        // Configuration
-        const particleCount = 80;
-        const connectionDistance = 150;
-        const mouseDistance = 200;
-
-        function resize() {
-            width = container.clientWidth;
-            height = container.clientHeight;
-            canvas.width = width;
-            canvas.height = height;
-        }
-        
-        window.addEventListener('resize', resize);
-        resize();
-
-        class Particle {
-            constructor() {
-                this.x = Math.random() * width;
-                this.y = Math.random() * height;
-                this.vx = (Math.random() - 0.5) * 1.5;
-                this.vy = (Math.random() - 0.5) * 1.5;
-                this.size = Math.random() * 2 + 1;
-            }
-
-            update() {
-                this.x += this.vx;
-                this.y += this.vy;
-
-                // Bounce off edges
-                if (this.x < 0 || this.x > width) this.vx *= -1;
-                if (this.y < 0 || this.y > height) this.vy *= -1;
-            }
-
-            draw() {
-                ctx.fillStyle = 'rgba(255, 106, 0, 0.7)'; // Primary Orange
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
-        }
-
-        function initParticles() {
-            particles = [];
-            for (let i = 0; i < particleCount; i++) {
-                particles.push(new Particle());
-            }
-        }
-
-        // Mouse interaction
-        let mouse = { x: null, y: null };
-        window.addEventListener('mousemove', (e) => {
-            const rect = canvas.getBoundingClientRect();
-            mouse.x = e.clientX - rect.left;
-            mouse.y = e.clientY - rect.top;
+        // Track Mouse
+        document.addEventListener('mousemove', (e) => {
+            const x = (e.clientX / window.innerWidth - 0.5) * 2;
+            const y = (e.clientY / window.innerHeight - 0.5) * 2;
+            const movementRange = 25; 
+            targetX = x * -movementRange;
+            targetY = y * -movementRange;
         });
 
-        window.addEventListener('mouseout', () => {
-            mouse.x = null;
-            mouse.y = null;
-        });
-
-        function animate() {
-            ctx.clearRect(0, 0, width, height);
+        // Track Scroll for Continuous Zoom Limit
+        window.addEventListener('scroll', () => {
+            const scrollY = window.scrollY;
+            const maxScroll = document.body.scrollHeight - window.innerHeight;
+            const progress = maxScroll > 0 ? scrollY / maxScroll : 0;
             
-            for (let i = 0; i < particles.length; i++) {
-                particles[i].update();
-                particles[i].draw();
+            // Map scroll progress to scale, but limit the maximum zoom
+            const maxZoomLimit = 1.15; // Stops zooming after a 15% increase
+            targetZoom = Math.min(1 + (progress * 0.5), maxZoomLimit);
+        });
 
-                // Draw connections
-                for (let j = i; j < particles.length; j++) {
-                    const dx = particles[i].x - particles[j].x;
-                    const dy = particles[i].y - particles[j].y;
-                    const distance = Math.sqrt(dx * dx + dy * dy);
+        // Animation Loop with Lerp (for buttery smoothness)
+        function animateParallax() {
+            currentX += (targetX - currentX) * 0.05;
+            currentY += (targetY - currentY) * 0.05;
+            currentZoom += (targetZoom - currentZoom) * 0.05;
 
-                    if (distance < connectionDistance) {
-                        ctx.beginPath();
-                        const opacity = 1 - (distance / connectionDistance);
-                        ctx.strokeStyle = `rgba(255, 106, 0, ${opacity * 0.2})`; // Primary Orange lines
-                        ctx.lineWidth = 1;
-                        ctx.moveTo(particles[i].x, particles[i].y);
-                        ctx.lineTo(particles[j].x, particles[j].y);
-                        ctx.stroke();
-                    }
-                }
-
-                // Connect to mouse
-                if (mouse.x != null) {
-                    const dx = particles[i].x - mouse.x;
-                    const dy = particles[i].y - mouse.y;
-                    const distance = Math.sqrt(dx * dx + dy * dy);
-
-                    if (distance < mouseDistance) {
-                        ctx.beginPath();
-                        const opacity = 1 - (distance / mouseDistance);
-                        ctx.strokeStyle = `rgba(255, 199, 100, ${opacity * 0.4})`; // Highlight Gold for mouse
-                        ctx.lineWidth = 1.5;
-                        ctx.moveTo(particles[i].x, particles[i].y);
-                        ctx.lineTo(mouse.x, mouse.y);
-                        ctx.stroke();
-                    }
-                }
+            if (heroContainer) {
+                // Apply both mouse movement and scroll zoom simultaneously
+                heroContainer.style.transform = `translate(${currentX}px, ${currentY}px) scale(${currentZoom})`;
             }
-            requestAnimationFrame(animate);
+            
+            requestAnimationFrame(animateParallax);
         }
-
-        initParticles();
-        animate();
+        animateParallax();
 
         /**
          * =========================================
@@ -2417,6 +2372,3 @@ d<!DOCTYPE html>
     </script>
 </body>
 </html>
-
-
-
