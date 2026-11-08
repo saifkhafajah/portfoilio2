@@ -640,7 +640,7 @@
            6. SKILLS
            ========================================= */
         #skills { background-color: var(--beige-200); padding: var(--section-padding); }
-        .skills-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 28px; }
+        .skills-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); gap: 28px; }
         .skill-card { padding: 30px; transition: transform 0.4s var(--ease-out), box-shadow 0.4s, border-color 0.4s, opacity 0.6s; position: relative; overflow: hidden; }
         .skill-card::after {
             content: ''; position: absolute; width: 180px; height: 180px; right: -70px; top: -70px; border-radius: 50%;
@@ -731,7 +731,7 @@
         }
         .filter-btn:hover { border-color: var(--orange); color: var(--ink); transform: translateY(-2px); }
         .filter-btn.active { background: var(--orange); border-color: var(--orange); color: var(--ink); box-shadow: var(--shadow-orange); }
-        .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 34px; }
+        .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(330px, 100%), 1fr)); gap: 34px; }
         .project-card {
             background-color: var(--beige-50); border: 1px solid var(--line);
             border-radius: 16px; overflow: hidden; transition: transform 0.5s var(--ease-out), opacity 0.4s, border-color 0.4s, box-shadow 0.4s;
@@ -854,7 +854,7 @@
         .award-banner p { color: var(--ink-muted); font-size: 0.98rem; }
         .award-banner .award-tag { font-family: var(--font-code); font-size: 0.75rem; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; color: var(--beige); background: var(--ink); padding: 8px 14px; border-radius: 20px; white-space: nowrap; }
         .award-banner .award-tag i { color: var(--orange); }
-        .media-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 26px; }
+        .media-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(290px, 100%), 1fr)); gap: 26px; }
         .media-item {
             background: var(--brown-900); border: 1px solid var(--line); border-radius: 14px;
             overflow: hidden; position: relative; box-shadow: var(--shadow-sm); transition: transform 0.4s var(--ease-out), box-shadow 0.4s, border-color 0.4s, opacity 0.6s; aspect-ratio: 4 / 3;
@@ -886,7 +886,7 @@
            10. SERVICES
            ========================================= */
         #services { padding: var(--section-padding); background-color: var(--beige-200); }
-        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 28px; }
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); gap: 28px; }
         .service-card {
             background-color: var(--beige-50); border: 1px solid var(--line); border-radius: 14px;
             transition: transform 0.4s var(--ease-out), box-shadow 0.4s, border-color 0.4s, opacity 0.6s; display: flex; flex-direction: column; position: relative; overflow: hidden;
@@ -1195,6 +1195,80 @@
             .timeline-item::after, .timeline-item.right::after { left: 5px; }
             .copyright { justify-content: center; text-align: center; }
             .projects-grid { grid-template-columns: 1fr; }
+        }
+
+        /* =========================================
+           14.5 PHONE FIT
+           ========================================= */
+        @media (max-width: 768px) {
+            /* Sideways slide-ins start off-screen and widen the page before they reveal; slide up instead */
+            .reveal-left:not(.active), .reveal-right:not(.active),
+            .timeline-item.left.reveal:not(.active), .timeline-item.right.reveal:not(.active) { transform: translateY(30px); }
+            :root { --section-padding: 64px 0; }
+            .section-header { margin-bottom: 40px; }
+            .section-title { font-size: clamp(1.55rem, 7vw, 2rem); letter-spacing: 2px; }
+            .section-subtitle { font-size: 0.9rem; }
+            /* Labels never below 12px */
+            .fact small, .stat-label, .timeline-type, .project-year, .media-label small,
+            .skill-card .skill-index, .form-note, .hero-fact, .lang-row small { font-size: 0.75rem; }
+            /* Comfortable tap targets */
+            .contact-item a { display: inline-flex; align-items: center; min-height: 44px; }
+            .copy-btn { min-height: 44px; padding: 0 16px; font-size: 0.75rem; }
+            .footer-nav { gap: 4px 16px; }
+            .footer-nav a { display: inline-block; padding: 12px 2px; }
+            .partner-logo a { display: flex; align-items: center; min-height: 44px; }
+            /* Denser cards */
+            .about-text h3 { font-size: 1.5rem; }
+            .skill-card { padding: 22px; }
+            .timeline-content { padding: 22px; }
+            .contact-info h3 { font-size: 1.35rem; }
+            .award-banner { padding: 22px; gap: 18px; }
+            .award-icon { width: 56px; height: 56px; font-size: 1.5rem; }
+        }
+        /* Phones: long card lists become swipeable rows (next card peeks in) */
+        @media (max-width: 640px) {
+            .skills-container, .services-grid, .media-grid, .projects-grid {
+                display: flex; gap: 14px; overflow-x: auto; overscroll-behavior-x: contain;
+                scroll-snap-type: x mandatory; scroll-padding-inline: 24px;
+                margin: 0 -24px; padding: 6px 24px 18px; scrollbar-width: none;
+            }
+            .skills-container::-webkit-scrollbar, .services-grid::-webkit-scrollbar, .media-grid::-webkit-scrollbar, .projects-grid::-webkit-scrollbar { display: none; }
+            .skills-container > *, .services-grid > *, .media-grid > *, .projects-grid > * { flex: 0 0 86%; scroll-snap-align: start; }
+            /* Filter chips: one sideways-scrolling row instead of three wrapped rows */
+            .filter-container {
+                flex-wrap: nowrap; justify-content: flex-start; overflow-x: auto; scrollbar-width: none;
+                margin: 0 -24px 36px; padding: 4px 24px 8px;
+            }
+            .filter-container::-webkit-scrollbar { display: none; }
+            .filter-btn { flex: 0 0 auto; white-space: nowrap; }
+            .swipe-hint {
+                display: flex; align-items: center; justify-content: flex-end; gap: 8px; margin: -24px 0 12px;
+                font-family: var(--font-code); font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; color: var(--ink-muted);
+            }
+            .swipe-hint i { color: var(--orange-strong); animation: swipeNudge 1.6s ease-in-out infinite; }
+            @keyframes swipeNudge { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(6px); } }
+            .project-image { height: 190px; }
+            .service-img-wrapper { height: 160px; }
+        }
+        @media (min-width: 641px) { .swipe-hint { display: none; } }
+        /* Phones: hero fits a screen better */
+        @media (max-width: 480px) {
+            #hero { padding: 92px 0 56px; }
+            .hero-content { margin-top: 0; padding: 0 16px; }
+            .hero-status { font-size: 0.68rem; letter-spacing: 1px; padding: 6px 12px; margin-bottom: 18px; }
+            .hero-greeting { font-size: 0.78rem; letter-spacing: 2px; margin-bottom: 14px; }
+            .hero-sub { font-size: 1rem; margin-bottom: 26px; }
+            .hero-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+            .hero-btns .btn:first-child { grid-column: 1 / -1; }
+            .hero-btns .btn { padding: 12px 10px; font-size: 0.74rem; letter-spacing: 1px; gap: 8px; }
+            .hero-facts { margin-top: 28px; gap: 8px; }
+            .hero-fact { padding: 8px 12px; }
+            .scroll-down { display: none; }
+        }
+        /* Touch screens: orbit cards are decorative (no hover), so taps go to the hero copy */
+        @media (hover: none) {
+            .galaxy-card { pointer-events: none; }
+            .hero-content { pointer-events: auto; }
         }
 
         /* Reduced motion: render final states, stop loops */
@@ -2201,6 +2275,13 @@
                 if (i < words.length - 1) title.appendChild(document.createTextNode(' '));
             });
         });
+        // Phones show these lists as swipeable rows; add a small hint above each (hidden on wider screens via CSS)
+        $$('.skills-container, .services-grid, .media-grid, .projects-grid').forEach(list => {
+            const hint = document.createElement('p');
+            hint.className = 'swipe-hint'; hint.setAttribute('aria-hidden', 'true');
+            hint.innerHTML = 'Swipe <i class="fas fa-arrow-right"></i>';
+            list.parentNode.insertBefore(hint, list);
+        });
         // Tag pop-in order within each card
         $$('.tags-container').forEach(c => Array.from(c.children).forEach((t, i) => t.style.setProperty('--t', i)));
 
@@ -2311,7 +2392,7 @@
             const outCubic = t => 1 - Math.pow(1 - t, 3);
             const frac = v => v - Math.floor(v);
 
-            let cards = [], arms = 6, slotsPerArm = 3, W = 0, H = 0, cx = 0, cy = 0, rMax = 1, b = 1, thB = 0, thE = 1, cardH = 100;
+            let cards = [], arms = 6, slotsPerArm = 3, W = 0, H = 0, cx = 0, cy = 0, rMax = 1, b = 1, thB = 0, thE = 1, cardH = 100, maxAlpha = 1;
             let idle = 0, spin = 0, holdK = 0, hold = -1, t0 = null, last = 0, mouse = null;
 
             function open(m) {
@@ -2321,7 +2402,7 @@
             function build() {
                 const mobile = window.innerWidth < 768;
                 arms = mobile ? 3 : 6;
-                const n = mobile ? 9 : 18;
+                const n = mobile ? 7 : 18;
                 slotsPerArm = Math.ceil(n / arms);
                 layer.textContent = '';
                 cards = Array.from({ length: n }, (_, i) => {
@@ -2351,7 +2432,9 @@
                 b = rMax / (turns * 2 * Math.PI);                  // Archimedean spiral r = b * theta
                 thB = (rMax * 0.08) / b;                           // birth radius, just around the name
                 thE = (halfDiag * 1.3) / b;                        // exit well past the screen edge
-                cardH = Math.min(H * (mobile ? 0.15 : 0.17), 132);
+                // Phones: size from the screen (the hero is taller than it) and keep cards small
+                cardH = mobile ? Math.min(window.innerHeight * 0.11, 84) : Math.min(H * 0.17, 132);
+                maxAlpha = mobile ? 0.6 : 1;
                 cards.forEach(c => { c.el.style.width = (cardH * 4 / 3).toFixed(0) + 'px'; c.el.style.height = cardH.toFixed(0) + 'px'; });
             }
             hero.addEventListener('mousemove', e => { const r = hero.getBoundingClientRect(); mouse = { x: e.clientX - r.left, y: e.clientY - r.top }; });
@@ -2431,7 +2514,7 @@
                     }
                     c.hover += ((hold === i ? 1 : 0) - c.hover) * (1 - Math.exp(-dt / 0.12));
                     const s = (0.3 + 0.7 * clamp01(r / rMax)) * (1 + 0.12 * c.hover);
-                    const alpha = Math.min(clamp01(p / 0.06), clamp01((waveR - r) / 140));
+                    const alpha = Math.min(clamp01(p / 0.06), clamp01((waveR - r) / 140)) * maxAlpha;
                     const key = `${x.toFixed(1)},${y.toFixed(1)},${s.toFixed(3)},${alpha.toFixed(2)}`;
                     if (key !== c.key) {
                         c.key = key;
