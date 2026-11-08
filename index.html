@@ -175,63 +175,12 @@
             -webkit-mask-image: radial-gradient(circle at 50% 30%, rgba(0,0,0,0.9), transparent 75%);
         }
 
-        /* =========================================
-           1.6 LOADING SCREEN
-           ========================================= */
-        #loading-screen {
-            position: fixed; inset: 0; background-color: var(--beige-100);
-            z-index: 9999; display: flex; justify-content: center; align-items: center;
-            transition: opacity 0.7s ease-out, visibility 0.7s, clip-path 0.9s var(--ease-out);
-            clip-path: inset(0 0 0 0);
-        }
-        #loading-screen.hidden { opacity: 0; visibility: hidden; clip-path: inset(0 0 100% 0); }
-        .loader-content { text-align: center; width: min(520px, 86vw); }
-        .loader-gear { width: 64px; height: 64px; margin: 0 auto 22px; color: var(--orange); animation: spin 3.2s linear infinite; }
-        .loader-title {
-            font-family: var(--font-header);
-            font-size: clamp(2.2rem, 6vw, 4.6rem);
-            color: var(--ink); text-transform: uppercase; letter-spacing: 6px;
-            animation: pulse-text 2s infinite ease-in-out;
-        }
-        .loader-title span { color: var(--orange-strong); }
-        .loader-status {
-            display: flex; justify-content: space-between; margin: 28px auto 10px;
-            font-family: var(--font-code); font-size: 0.8rem; letter-spacing: 3px;
-            color: var(--ink-muted); text-transform: uppercase;
-        }
-        .loader-status b { color: var(--orange-ink); font-weight: 500; }
-        .loader-bar { height: 3px; background: rgba(var(--ink-rgb), 0.1); overflow: hidden; border-radius: 3px; }
-        .loader-bar span {
-            display: block; height: 100%; width: 0;
-            background: linear-gradient(90deg, var(--orange), var(--orange-strong));
-            transition: width 0.15s linear;
-        }
-        @keyframes pulse-text {
-            0%, 100% { opacity: 0.45; transform: scale(0.98); }
-            50% { opacity: 1; transform: scale(1.01); }
-        }
         @keyframes spin { to { transform: rotate(360deg); } }
         @keyframes spin-rev { to { transform: rotate(-360deg); } }
 
         /* =========================================
-           1.7 CURSOR, PROGRESS BAR, BACK TO TOP
+           1.7 PROGRESS BAR, BACK TO TOP
            ========================================= */
-        .cursor-dot, .cursor-ring {
-            position: fixed; top: 0; left: 0; pointer-events: none; z-index: 10000;
-            border-radius: 50%; transform: translate(-100px, -100px);
-        }
-        .cursor-dot { width: 6px; height: 6px; margin: -3px 0 0 -3px; background: var(--orange); }
-        .cursor-ring {
-            width: 34px; height: 34px; margin: -17px 0 0 -17px;
-            border: 1.5px solid rgba(var(--orange-rgb), 0.85);
-            transition: width 0.25s var(--ease-out), height 0.25s var(--ease-out), margin 0.25s var(--ease-out), border-color 0.25s, background 0.25s;
-        }
-        .cursor-ring.is-hover {
-            width: 56px; height: 56px; margin: -28px 0 0 -28px;
-            border-color: var(--orange); background: rgba(var(--orange-rgb), 0.12);
-        }
-        @media (hover: none), (pointer: coarse) { .cursor-dot, .cursor-ring { display: none; } }
-
         #scroll-progress {
             position: fixed; top: 0; left: 0; height: 3px; width: 0; z-index: 1500;
             background: linear-gradient(90deg, var(--orange), var(--beige));
@@ -424,56 +373,88 @@
             content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 120px; z-index: 1; pointer-events: none;
             background: linear-gradient(to bottom, transparent, rgba(var(--brown-900-rgb), 0.55));
         }
-        .hero-gear { position: absolute; z-index: 1; color: var(--orange); opacity: 0.16; pointer-events: none; }
-        .hero-gear svg { width: 100%; height: 100%; display: block; }
-        .hero-gear.g1 { width: 340px; height: 340px; left: -110px; bottom: -90px; animation: spin 38s linear infinite; }
-        .hero-gear.g2 { width: 200px; height: 200px; left: 185px; bottom: 150px; color: var(--beige); opacity: 0.12; animation: spin-rev 22.4s linear infinite; }
-        .hero-gear.g3 { width: 240px; height: 240px; right: -70px; top: 90px; color: var(--beige); opacity: 0.1; animation: spin 30s linear infinite; }
-        .hero-orb {
-            position: absolute; z-index: 0; border-radius: 50%; filter: blur(70px); pointer-events: none; opacity: 0.45;
-            animation: orbFloat 14s ease-in-out infinite alternate;
-        }
-        .hero-orb.o1 { width: 420px; height: 420px; background: rgba(var(--orange-rgb), 0.55); top: 12%; left: 8%; }
-        .hero-orb.o2 { width: 360px; height: 360px; background: rgba(var(--beige-rgb), 0.35); bottom: 6%; right: 6%; animation-delay: -6s; }
-        @keyframes orbFloat { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(60px, -40px) scale(1.15); } }
 
-        .hero-content { text-align: center; z-index: 2; padding: 0 20px; width: 100%; max-width: 1000px; margin: 5vh auto 0; position: relative; }
+        .hero-content { text-align: center; z-index: 2; padding: 0 20px; width: 100%; max-width: 1000px; margin: 5vh auto 0; position: relative; pointer-events: none; }
+        /* Let orbit cards behind the copy stay hoverable; real controls keep their pointer events */
+        .hero-content a, .hero-content button, .hero-content .hero-fact, .hero-content .hero-status { pointer-events: auto; }
+        /* Soft dark pool behind the copy so passing cards never hurt legibility */
+        .hero-content::before {
+            content: ''; position: absolute; inset: -70px -60px; z-index: -1; pointer-events: none;
+            background: radial-gradient(closest-side, rgba(var(--brown-900-rgb), 0.78), rgba(var(--brown-900-rgb), 0.5) 60%, rgba(var(--brown-900-rgb), 0));
+        }
+
+        /* =========================================
+           4.1 PROJECT ORBIT (spiral of floating project cards)
+           ========================================= */
+        .galaxy { position: absolute; inset: 0; z-index: 1; pointer-events: none; overflow: hidden; }
+        .galaxy-tracks { position: absolute; inset: 0; width: 100%; height: 100%; }
+        .galaxy-card {
+            position: absolute; left: 0; top: 0; pointer-events: auto; cursor: pointer; opacity: 0;
+            border-radius: 10px; overflow: hidden; background: var(--brown-900);
+            border: 1px solid rgba(var(--beige-rgb), 0.22); box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
+            will-change: transform, opacity; transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .galaxy-card img { width: 100%; height: 100%; object-fit: cover; display: block; filter: saturate(0.85) brightness(0.88); transition: filter 0.3s; }
+        .galaxy-card .gc-label {
+            position: absolute; left: 6px; bottom: 6px; padding: 2px 6px; border-radius: 3px;
+            font-family: var(--font-code); font-size: 10px; letter-spacing: 0.5px; white-space: nowrap;
+            background: rgba(var(--brown-900-rgb), 0.82); color: var(--beige); opacity: 0; transform: translateY(4px);
+            transition: opacity 0.25s, transform 0.25s var(--ease-out);
+        }
+        .galaxy-card:hover { border-color: var(--orange); box-shadow: 0 0 0 1px var(--orange), 0 18px 44px rgba(var(--orange-rgb), 0.35); }
+        .galaxy-card:hover img { filter: none; }
+        .galaxy-card:hover .gc-label { opacity: 1; transform: translateY(0); }
         .hero-status {
             display: inline-flex; align-items: center; gap: 10px; padding: 8px 18px; border-radius: 30px;
             border: 1px solid rgba(var(--beige-rgb), 0.25); background: rgba(var(--brown-900-rgb), 0.5); backdrop-filter: blur(8px);
             font-family: var(--font-code); font-size: 0.78rem; letter-spacing: 1.5px; text-transform: uppercase;
             color: var(--on-dark); margin-bottom: 28px;
-            animation: fadeDown 1s var(--ease-out) 0.2s both;
+            animation: fadeDown 0.8s var(--ease-out) 1.05s both;
         }
         .hero-status i { color: #4ade80; font-size: 0.6rem; animation: blinkDot 1.6s infinite; }
         @keyframes blinkDot { 0%, 100% { opacity: 1; } 50% { opacity: 0.25; } }
         .hero-greeting {
             font-family: var(--font-code); color: var(--beige); font-size: 1.05rem;
             margin-bottom: 20px; display: block; text-transform: uppercase; letter-spacing: 4px;
-            animation: fadeDown 1s var(--ease-out) 0.35s both;
+            animation: fadeDown 0.8s var(--ease-out) 1.12s both;
         }
         .hero-title {
-            font-family: var(--font-header); font-size: clamp(2.6rem, 8vw, 6rem); line-height: 1.05;
+            font-family: var(--font-header); font-size: clamp(2.4rem, 7.2vw, 5.4rem); line-height: 1.05;
             color: var(--on-dark); margin-bottom: 25px; text-shadow: 0 10px 30px rgba(0,0,0,0.45);
-            letter-spacing: -1px; perspective: 600px;
+            letter-spacing: -1px;
         }
         .hero-title .word { display: inline-block; white-space: nowrap; }
-        .hero-title .ch { display: inline-block; opacity: 0; transform: translateY(40px) rotateX(-60deg); animation: letterIn 0.9s var(--ease-out) forwards; animation-delay: calc(0.55s + var(--i) * 0.045s); }
-        /* Outline letters fill with orange in a left-to-right wave once they land */
-        .hero-title .outline .ch {
-            color: transparent; -webkit-text-stroke: 2px var(--orange);
-            animation: letterIn 0.9s var(--ease-out) forwards, fillOrange 0.6s ease forwards;
-            animation-delay: calc(0.55s + var(--i) * 0.045s), calc(1.9s + var(--i) * 0.07s);
-        }
-        @keyframes letterIn { to { opacity: 1; transform: translateY(0) rotateX(0); } }
+        .hero-title .ch { display: inline-block; will-change: transform, opacity; }
+        /* Logo mark that the name forms out of (see the intro script) */
+        .hero-title .hero-logo { width: 0.82em; height: 0.82em; margin-right: 0.16em; vertical-align: -0.06em; position: relative; z-index: 1; }
+        .hero-title .hero-logo svg { width: 100%; height: 100%; display: block; overflow: visible; }
+        /* Logo draws itself like a circuit trace (class "tracing" is added on the intro's first frame).
+           Default state = fully drawn, so reduced motion / no-JS show the finished mark. */
+        .hero-logo .pad { fill: #FC5C02; transform-box: fill-box; transform-origin: center; }
+        .hero-logo .pad-core { fill: #E2CEAE; }
+        .hero-logo .pulse { stroke-dasharray: 0.14 0.86; opacity: 0; }
+        .hero-title.tracing .hero-logo .trace { stroke-dasharray: 1; animation: traceDraw 0.45s cubic-bezier(0.65, 0, 0.35, 1) both; }
+        .hero-title.tracing .hero-logo .t-inner { animation-duration: 0.36s; animation-delay: 0.14s; }
+        .hero-title.tracing .hero-logo .pad { animation: padPop 0.28s var(--ease-back) both; animation-delay: var(--pd); }
+        .hero-title.tracing .hero-logo .pulse { animation: pulseRun 0.7s ease-out 0.3s both; }
+        .hero-title.tracing .hero-logo svg { animation: logoGlow 0.8s ease 0.4s both; }
+        @keyframes traceDraw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+        @keyframes padPop { from { transform: scale(0); } to { transform: scale(1); } }
+        @keyframes pulseRun { 0% { stroke-dashoffset: 0.14; opacity: 0; } 15% { opacity: 1; } 85% { opacity: 1; } 100% { stroke-dashoffset: -0.86; opacity: 0; } }
+        @keyframes logoGlow { 0%, 100% { filter: drop-shadow(0 0 0 rgba(252, 92, 2, 0)); } 45% { filter: drop-shadow(0 0 14px rgba(252, 92, 2, 0.85)); } }
+        /* Outline letters fill with orange in a left-to-right wave once the name has formed */
+        .hero-title .outline .ch { color: transparent; -webkit-text-stroke: 2px var(--orange); }
+        .hero-title.formed .outline .ch { animation: fillOrange 0.5s ease forwards; animation-delay: calc(var(--k) * 0.05s); }
         @keyframes fillOrange { to { color: var(--orange); } }
+        /* Before the intro script runs, keep the title invisible so it never flashes in its final state */
+        .intro-pending .hero-title { visibility: hidden; }
         @keyframes fadeDown { from { opacity: 0; transform: translateY(-16px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
 
         .typewriter {
             font-family: var(--font-code); font-size: clamp(1.05rem, 3vw, 1.5rem); color: var(--on-dark);
             min-height: 1.6em; margin-bottom: 22px; font-weight: 300;
-            animation: fadeUp 1s var(--ease-out) 1.2s both;
+            animation: fadeUp 0.8s var(--ease-out) 1.2s both;
         }
         .typewriter .prompt { color: var(--orange); }
         .cursor {
@@ -483,9 +464,9 @@
         @keyframes blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
         .hero-sub {
             max-width: 640px; margin: 0 auto 44px; color: var(--on-dark-muted); font-size: 1.08rem;
-            animation: fadeUp 1s var(--ease-out) 1.35s both;
+            animation: fadeUp 0.8s var(--ease-out) 1.28s both;
         }
-        .hero-btns { display: flex; gap: 18px; justify-content: center; flex-wrap: wrap; animation: fadeUp 1s var(--ease-out) 1.5s both; }
+        .hero-btns { display: flex; gap: 18px; justify-content: center; flex-wrap: wrap; animation: fadeUp 0.8s var(--ease-out) 1.36s both; }
         .hero-facts {
             display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-top: 56px;
         }
@@ -493,11 +474,11 @@
             font-family: var(--font-code); font-size: 0.78rem; letter-spacing: 1px; color: var(--on-dark);
             padding: 10px 16px; border-radius: 8px; border: 1px solid rgba(var(--beige-rgb), 0.18);
             background: rgba(var(--brown-900-rgb), 0.5); backdrop-filter: blur(6px); display: flex; align-items: center; gap: 10px;
-            animation: fadeUp 0.9s var(--ease-back) both; transition: transform 0.3s var(--ease-out), border-color 0.3s;
+            animation: fadeUp 0.9s var(--ease-back) backwards; transition: transform 0.3s var(--ease-out), border-color 0.3s;
         }
-        .hero-fact:nth-child(1) { animation-delay: 1.7s; }
-        .hero-fact:nth-child(2) { animation-delay: 1.82s; }
-        .hero-fact:nth-child(3) { animation-delay: 1.94s; }
+        .hero-fact:nth-child(1) { animation-delay: 1.44s; }
+        .hero-fact:nth-child(2) { animation-delay: 1.52s; }
+        .hero-fact:nth-child(3) { animation-delay: 1.6s; }
         .hero-fact:hover { transform: translateY(-3px); border-color: rgba(var(--orange-rgb), 0.6); }
         .hero-fact b { color: var(--orange); font-weight: 500; }
         .hero-fact i { color: var(--beige); }
@@ -506,8 +487,19 @@
             position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%);
             z-index: 2; opacity: 0.8; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 8px;
             font-family: var(--font-code); font-size: 0.65rem; letter-spacing: 3px; color: var(--on-dark-muted); text-transform: uppercase;
-            animation: fadeUp 1s var(--ease-out) 2s both;
+            animation: fadeUpCentered 0.8s var(--ease-out) 1.75s both;
         }
+        @keyframes fadeUpCentered { from { opacity: 0; transform: translate(-50%, 24px); } to { opacity: 0.8; transform: translate(-50%, 0); } }
+        /* Intro step 2 (~0.7s): the surrounding interface assembles around the formed name */
+        #navbar .logo, #navbar .mobile-menu-btn { animation: fadeDown 0.6s var(--ease-out) 0.7s backwards; }
+        @media (min-width: 1101px) {
+            #navbar .nav-links li { animation: fadeDown 0.6s var(--ease-out) backwards; animation-delay: calc(0.75s + var(--i, 0) * 0.05s); }
+        }
+        .desk-cv { animation: fadeDown 0.6s var(--ease-out) 0.8s backwards; }
+        .ruler { animation: rulerIn 0.9s var(--ease-out) 0.7s backwards; }
+        .secnav { animation: introFade 0.7s ease 0.9s backwards; }
+        @keyframes rulerIn { from { clip-path: inset(0 0 100% 0); } to { clip-path: inset(0 0 0 0); } }
+        @keyframes introFade { from { opacity: 0; } to { opacity: 1; } }
         .mouse { width: 24px; height: 38px; border: 2px solid rgba(var(--beige-rgb), 0.5); border-radius: 14px; position: relative; }
         .mouse::before {
             content: ''; position: absolute; top: 6px; left: 50%; width: 4px; height: 8px; margin-left: -2px;
@@ -566,16 +558,14 @@
         @keyframes scroll-reverse { 0% { transform: translateX(-50%); } 100% { transform: translateX(0); } }
 
         /* Kinetic ribbon (crossed bands) */
-        .ribbon { position: relative; z-index: 3; height: 150px; overflow: hidden; background: var(--beige-100); display: grid; place-items: center; }
+        .ribbon { position: relative; z-index: 3; height: 110px; overflow: hidden; background: var(--beige-100); display: grid; place-items: center; }
         .ribbon-band {
             position: absolute; left: -5%; width: 110%; padding: 14px 0; overflow: hidden;
             font-family: var(--font-header); font-weight: 900; font-size: clamp(1rem, 2.4vw, 1.5rem);
             letter-spacing: 4px; text-transform: uppercase; white-space: nowrap;
         }
         .ribbon-band.a { background: var(--orange); color: var(--ink); transform: rotate(-3deg); box-shadow: var(--shadow-orange); z-index: 2; }
-        .ribbon-band.b { background: var(--ink); color: var(--beige); transform: rotate(2.5deg); z-index: 1; }
         .ribbon-track { display: flex; width: fit-content; animation: scroll 28s linear infinite; }
-        .ribbon-band.b .ribbon-track { animation: scroll-reverse 34s linear infinite; }
         .ribbon-track span { display: inline-flex; align-items: center; gap: 28px; padding-right: 28px; }
         .ribbon-track i { width: 10px; height: 10px; background: currentColor; transform: rotate(45deg); display: inline-block; }
 
@@ -645,14 +635,6 @@
         }
         .stat-label { font-family: var(--font-code); font-size: 0.72rem; color: var(--ink); text-transform: uppercase; letter-spacing: 1px; margin-top: 8px; display: block; }
 
-        /* Big parallax watermark words (JS moves --wmx) */
-        [data-watermark] { overflow: hidden; }
-        [data-watermark]::before {
-            content: attr(data-watermark); position: absolute; top: 60px; right: 0; font-family: var(--font-header);
-            font-size: clamp(6rem, 16vw, 13rem); line-height: 1; color: transparent; -webkit-text-stroke: 1.5px rgba(var(--orange-rgb), 0.16);
-            pointer-events: none; z-index: 0; font-weight: 900; white-space: nowrap;
-            transform: translateX(var(--wmx, 0px));
-        }
 
         /* =========================================
            6. SKILLS
@@ -1095,6 +1077,63 @@
             #back-to-top { right: 84px; }
         }
 
+        /* =========================================
+           13.6 SECTION NAVIGATOR (letters pop between stacks)
+           Past sections stack small at the top right, the current one
+           pops up large beneath them, upcoming ones wait at the bottom
+           right. Every letter springs to its new spot individually.
+           ========================================= */
+        .secnav {
+            --cur: var(--ink); --faint: rgba(var(--ink-rgb), 0.38); --hov: var(--orange-strong);
+            --glass: rgba(244, 234, 219, 0.74);
+            position: fixed; inset: 0; z-index: 890; pointer-events: none; display: none;
+        }
+        .secnav.on-dark { --cur: var(--beige-50); --faint: rgba(var(--beige-rgb), 0.5); --hov: var(--orange); --glass: rgba(var(--brown-900-rgb), 0.42); }
+        .secnav-glass {
+            position: absolute; right: 0; width: 460px; background: var(--glass);
+            backdrop-filter: blur(9px); -webkit-backdrop-filter: blur(9px);
+            transition: height 0.6s var(--ease-out), background-color 0.45s, opacity 0.45s;
+        }
+        .secnav-glass.top {
+            top: 0; height: var(--top-h, 200px);
+            mask-image: radial-gradient(100% 100% at 100% 0%, #000 38%, rgba(0,0,0,0.75) 55%, transparent 100%);
+            -webkit-mask-image: radial-gradient(100% 100% at 100% 0%, #000 38%, rgba(0,0,0,0.75) 55%, transparent 100%);
+        }
+        .secnav-glass.bottom {
+            bottom: 0; height: var(--bot-h, 200px);
+            mask-image: radial-gradient(100% 100% at 100% 100%, #000 38%, rgba(0,0,0,0.75) 55%, transparent 100%);
+            -webkit-mask-image: radial-gradient(100% 100% at 100% 100%, #000 38%, rgba(0,0,0,0.75) 55%, transparent 100%);
+        }
+        .secnav-letter {
+            position: absolute; left: 0; top: 0; white-space: pre;
+            font-family: var(--font-header); font-weight: 700; font-size: 30px; line-height: 1;
+            color: var(--cur); will-change: transform, opacity; transition: color 0.45s; /* fading is per-letter opacity set by JS */
+        }
+        .secnav-letter.cur { color: var(--cur); }
+        .secnav-letter.hov { color: var(--hov); }
+        .secnav-hit { position: absolute; left: 0; top: 0; pointer-events: auto; cursor: pointer; }        @media (min-width: 1360px) and (hover: hover) and (pointer: fine) {
+            .secnav { display: block; }
+            /* The section navigator + CV button take over from the top nav bar here */
+            #navbar { display: none; }
+        }
+        .secnav-hit:focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; border-radius: 4px; }
+
+        /* Desktop CV button (only where the nav bar is hidden) */
+        .desk-cv {
+            position: fixed; top: 22px; right: 80px; z-index: 1000; display: none; align-items: center; gap: 8px;
+            min-height: 40px; padding: 0 16px; border-radius: 6px; border: 1.5px solid var(--orange);
+            background: var(--orange); color: var(--ink); box-shadow: var(--shadow-orange);
+            font-family: var(--font-code); font-size: 0.8rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+            transition: background 0.25s, color 0.25s, transform 0.3s var(--ease-back);
+        }
+        .desk-cv:hover { background: var(--ink); border-color: var(--ink); color: var(--beige-50); transform: translateY(-2px); }
+        .desk-cv:focus-visible { outline: 3px solid var(--orange-ink); outline-offset: 3px; }
+        .desk-cv i { transition: transform 0.35s var(--ease-back); }
+        .desk-cv:hover i { transform: translateY(2px); }
+        @media (min-width: 1360px) and (hover: hover) and (pointer: fine) {
+            .desk-cv { display: inline-flex; }
+        }
+
         @media (max-width: 1080px) {
             .edu-grid { grid-template-columns: 1fr 1fr; }
         }
@@ -1112,7 +1151,6 @@
             .modal-body { grid-template-columns: 1fr; }
             .award-banner { grid-template-columns: auto 1fr; }
             .award-banner .award-tag { grid-column: 1 / -1; justify-self: start; }
-            .hero-gear.g2 { display: none; }
         }
         /* Collapse nav into the slide-in menu before the links run out of room */
         @media (max-width: 1100px) {
@@ -1132,8 +1170,6 @@
         }
         @media (max-width: 768px) {
             .hero-content { margin-top: 8vh; }
-            .hero-gear.g1 { width: 220px; height: 220px; }
-            .hero-gear.g3 { display: none; }
             .marquee::before, .marquee::after { width: 50px; }
             .facts-list { grid-template-columns: 1fr; }
             .contact-container { padding: 30px 20px; }
@@ -1145,7 +1181,7 @@
             .edu-grid { grid-template-columns: 1fr; }
             .profile-badge { right: 8px; }
             .spin-badge { left: -12px; top: -24px; width: 96px; height: 96px; }
-            .ribbon { height: 120px; }
+            .ribbon { height: 90px; }
         }
         @media (max-width: 480px) {
             .hero-btns { flex-direction: column; width: 100%; }
@@ -1172,7 +1208,6 @@
             .wipe-img { clip-path: none; }
             .skills-container .tech-tag, .timeline-item .tech-tag { opacity: 1; scale: 1; }
             .dots i.on { scale: 1; }
-            .hero-orb, .hero-gear { animation: none !important; }
             #net-canvas { display: none; }
         }
     </style>
@@ -1186,19 +1221,7 @@
         </symbol>
     </svg>
 
-    <!-- Loading Screen -->
-    <div id="loading-screen" aria-hidden="true">
-        <div class="loader-content">
-            <svg class="loader-gear" aria-hidden="true"><use href="#gear"/></svg>
-            <h1 class="loader-title">Saif <span>Khafajah</span></h1>
-            <div class="loader-status"><span id="loader-msg">Initializing systems</span><b id="loader-pct">0%</b></div>
-            <div class="loader-bar"><span id="loader-bar"></span></div>
-        </div>
-    </div>
-
-    <!-- Custom cursor + scroll progress -->
-    <div class="cursor-dot" aria-hidden="true"></div>
-    <div class="cursor-ring" aria-hidden="true"></div>
+    <!-- Scroll progress -->
     <div id="scroll-progress" aria-hidden="true"></div>
 
     <!-- FIXED CINEMATIC BACKGROUND -->
@@ -1241,11 +1264,11 @@
 
     <!-- Hero -->
     <section id="hero">
-        <div class="hero-orb o1" aria-hidden="true"></div>
-        <div class="hero-orb o2" aria-hidden="true"></div>
-        <div class="hero-gear g1" aria-hidden="true"><svg><use href="#gear"/></svg></div>
-        <div class="hero-gear g2" aria-hidden="true"><svg><use href="#gear"/></svg></div>
-        <div class="hero-gear g3" aria-hidden="true"><svg><use href="#gear"/></svg></div>
+        <!-- Project orbit: cards ride spiral arms out from the name (built by JS) -->
+        <div class="galaxy" id="galaxy" aria-hidden="true">
+            <canvas class="galaxy-tracks"></canvas>
+            <div class="galaxy-cards"></div>
+        </div>
         <div class="hero-content">
             <div class="hero-status"><i class="fas fa-circle"></i> Open to R&amp;D and robotics roles &middot; Amman, Jordan</div>
             <span class="hero-greeting">// Robotics &amp; Embedded Systems Engineer</span>
@@ -1280,13 +1303,13 @@
             <h4 class="marquee-title">Trusted By</h4>
             <div class="marquee">
                 <div class="marquee-track" id="trusted-track">
-                    <div class="partner-logo"><a href="https://www.orange.jo" target="_blank" rel="noopener" title="Orange Jordan"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c8/Orange_logo.svg" alt="Orange Jordan"></a></div>
+                    <div class="partner-logo"><a href="https://www.orange.jo" target="_blank" rel="noopener" title="Orange Jordan"><img loading="lazy" decoding="async" src="https://upload.wikimedia.org/wikipedia/commons/c/c8/Orange_logo.svg" alt="Orange Jordan"></a></div>
                     <div class="partner-logo"><span class="text-logo">Middle East Technology</span></div>
-                    <div class="partner-logo"><a href="https://www.ieee.org" target="_blank" rel="noopener" title="IEEE"><img src="https://upload.wikimedia.org/wikipedia/commons/2/21/IEEE_logo.svg" alt="IEEE"></a></div>
-                    <div class="partner-logo"><a href="https://www.bau.edu.jo" target="_blank" rel="noopener" title="Al-Balqa Applied University"><img src="assets/bau_logo.png" alt="Al-Balqa Applied University"></a></div>
-                    <div class="partner-logo"><a href="https://mitxonline.mit.edu" target="_blank" rel="noopener" title="MITx"><img src="assets/mitx_logo.png" alt="MITx"></a></div>
+                    <div class="partner-logo"><a href="https://www.ieee.org" target="_blank" rel="noopener" title="IEEE"><img loading="lazy" decoding="async" src="https://upload.wikimedia.org/wikipedia/commons/2/21/IEEE_logo.svg" alt="IEEE"></a></div>
+                    <div class="partner-logo"><a href="https://www.bau.edu.jo" target="_blank" rel="noopener" title="Al-Balqa Applied University"><img loading="lazy" decoding="async" src="assets/optimized/bau_logo.png" alt="Al-Balqa Applied University"></a></div>
+                    <div class="partner-logo"><a href="https://mitxonline.mit.edu" target="_blank" rel="noopener" title="MITx"><img loading="lazy" decoding="async" src="assets/mitx_logo.png" alt="MITx"></a></div>
                     <div class="partner-logo"><span class="text-logo">Yarmouk University</span></div>
-                    <div class="partner-logo"><a href="https://www.autodesk.com" target="_blank" rel="noopener" title="Autodesk"><img src="assets/autodesk_logo.png" alt="Autodesk"></a></div>
+                    <div class="partner-logo"><a href="https://www.autodesk.com" target="_blank" rel="noopener" title="Autodesk"><img loading="lazy" decoding="async" src="assets/autodesk_logo.png" alt="Autodesk"></a></div>
                     <div class="partner-logo"><span class="text-logo">Hashemite University</span></div>
                 </div>
             </div>
@@ -1299,15 +1322,15 @@
             <h4 class="marquee-title">Toolchain</h4>
             <div class="marquee">
                 <div class="marquee-track reverse" id="tools-track">
-                    <div class="partner-logo"><img src="assets/Altuim logo2.png" alt="Altium Designer" title="Altium Designer"></div>
-                    <div class="partner-logo"><img src="assets/Fusion360_Logo.png" alt="Fusion 360" title="Fusion 360"></div>
-                    <div class="partner-logo"><img src="assets/ROS&ROS2.png" alt="ROS & ROS 2" title="ROS & ROS 2"></div>
+                    <div class="partner-logo"><img loading="lazy" decoding="async" src="assets/Altuim logo2.png" alt="Altium Designer" title="Altium Designer"></div>
+                    <div class="partner-logo"><img loading="lazy" decoding="async" src="assets/Fusion360_Logo.png" alt="Fusion 360" title="Fusion 360"></div>
+                    <div class="partner-logo"><img loading="lazy" decoding="async" src="assets/ROS&ROS2.png" alt="ROS & ROS 2" title="ROS & ROS 2"></div>
                     <div class="partner-logo"><span class="text-chip">C / C++</span></div>
-                    <div class="partner-logo"><img src="assets/rasberry.png" alt="Raspberry Pi" title="Raspberry Pi"></div>
+                    <div class="partner-logo"><img loading="lazy" decoding="async" src="assets/rasberry.png" alt="Raspberry Pi" title="Raspberry Pi"></div>
                     <div class="partner-logo"><span class="text-chip">Python</span></div>
-                    <div class="partner-logo"><img src="assets/Visual_Studio_Code_1.35_icon.svg" alt="VS Code" title="VS Code"></div>
+                    <div class="partner-logo"><img loading="lazy" decoding="async" src="assets/Visual_Studio_Code_1.35_icon.svg" alt="VS Code" title="VS Code"></div>
                     <div class="partner-logo"><span class="text-chip">OpenCV</span></div>
-                    <div class="partner-logo"><img src="assets/matlab.png" alt="MATLAB" title="MATLAB"></div>
+                    <div class="partner-logo"><img loading="lazy" decoding="async" src="assets/optimized/matlab.png" alt="MATLAB" title="MATLAB"></div>
                     <div class="partner-logo"><span class="text-chip">Gazebo / RViz</span></div>
                     <div class="partner-logo"><span class="text-chip">SolidWorks</span></div>
                     <div class="partner-logo"><span class="text-chip">Jetson Nano</span></div>
@@ -1332,7 +1355,7 @@
                         <i class="fas fa-gear"></i>
                     </div>
                     <div class="profile-image tilt">
-                        <img src="assets/saifkhafajah.jpeg" alt="Saif Khafajah assembling a robotic arm at Orange FabLab" class="wipe-img">
+                        <img loading="lazy" decoding="async" src="assets/saifkhafajah.jpeg" alt="Saif Khafajah assembling a robotic arm at Orange FabLab" class="wipe-img">
                     </div>
                     <div class="profile-badge"><b>#Make</b>Orange FabLab &middot; Robotics Engineer</div>
                 </div>
@@ -1365,7 +1388,7 @@
     </section>
 
     <!-- Skills -->
-    <section id="skills" data-watermark="SKILLS">
+    <section id="skills">
         <div class="container">
             <div class="section-header reveal">
                 <span class="section-kicker">02 // Capabilities</span>
@@ -1436,7 +1459,6 @@
 
     <!-- Kinetic ribbon -->
     <div class="ribbon" aria-hidden="true">
-        <div class="ribbon-band b"><div class="ribbon-track"><span>CAD <i></i> Altium <i></i> Fusion 360 <i></i> Raspberry Pi <i></i> Jetson Nano <i></i> OpenCV <i></i> Gazebo <i></i> RViz <i></i></span></div></div>
         <div class="ribbon-band a"><div class="ribbon-track"><span>Design <i></i> Prototype <i></i> PCB <i></i> Firmware <i></i> ROS <i></i> Test <i></i> Teach <i></i> Repeat <i></i></span></div></div>
     </div>
 
@@ -1520,7 +1542,7 @@
     </section>
 
     <!-- Projects -->
-    <section id="projects" data-watermark="WORK">
+    <section id="projects">
         <div class="container">
             <div class="section-header reveal">
                 <span class="section-kicker">04 // Selected Work</span>
@@ -1540,7 +1562,7 @@
 
                 <article class="project-card tilt" data-project="arm" data-category="robotics vision pcb ros">
                     <div class="project-image">
-                        <img src="assets/armo.jpeg" alt="Vision-guided 5-DOF robotic arm with camera" class="wipe-img">
+                        <img loading="lazy" decoding="async" src="assets/armo.jpeg" alt="Vision-guided 5-DOF robotic arm with camera" class="wipe-img">
                         <span class="project-year">2025 - 2026</span>
                         <i class="fas fa-magnifying-glass-plus project-icon"></i>
                     </div>
@@ -1551,9 +1573,9 @@
                         <div class="project-links">
                             <button class="project-link" type="button">Details <i class="fas fa-arrow-right"></i></button>
                             <div class="project-tools-icons">
-                                <img src="assets/Altuim logo2.png" class="tool-icon-small" title="Altium" alt="Altium">
-                                <img src="assets/Fusion360_Logo.png" class="tool-icon-small" title="Fusion 360" alt="Fusion 360">
-                                <img src="assets/rasberry.png" class="tool-icon-small" title="Raspberry Pi" alt="Raspberry Pi">
+                                <img loading="lazy" decoding="async" src="assets/Altuim logo2.png" class="tool-icon-small" title="Altium" alt="Altium">
+                                <img loading="lazy" decoding="async" src="assets/Fusion360_Logo.png" class="tool-icon-small" title="Fusion 360" alt="Fusion 360">
+                                <img loading="lazy" decoding="async" src="assets/rasberry.png" class="tool-icon-small" title="Raspberry Pi" alt="Raspberry Pi">
                             </div>
                         </div>
                     </div>
@@ -1561,7 +1583,7 @@
 
                 <article class="project-card tilt" data-project="rover" data-category="robotics pcb ros">
                     <div class="project-image">
-                        <img src="assets/mars rover sofex.jpeg" alt="1:1 scale quadruped Mars rover at SOFEX 2024" class="wipe-img">
+                        <img loading="lazy" decoding="async" src="assets/mars rover sofex.jpeg" alt="1:1 scale quadruped Mars rover at SOFEX 2024" class="wipe-img">
                         <span class="project-year">2023 - 2024</span>
                         <i class="fas fa-magnifying-glass-plus project-icon"></i>
                     </div>
@@ -1572,9 +1594,9 @@
                         <div class="project-links">
                             <button class="project-link" type="button">Details <i class="fas fa-arrow-right"></i></button>
                             <div class="project-tools-icons">
-                                <img src="assets/Altuim logo2.png" class="tool-icon-small" title="Altium" alt="Altium">
-                                <img src="assets/ROS&ROS2.png" class="tool-icon-small" title="ROS" alt="ROS">
-                                <img src="assets/Fusion360_Logo.png" class="tool-icon-small" title="Fusion 360" alt="Fusion 360">
+                                <img loading="lazy" decoding="async" src="assets/Altuim logo2.png" class="tool-icon-small" title="Altium" alt="Altium">
+                                <img loading="lazy" decoding="async" src="assets/ROS&ROS2.png" class="tool-icon-small" title="ROS" alt="ROS">
+                                <img loading="lazy" decoding="async" src="assets/Fusion360_Logo.png" class="tool-icon-small" title="Fusion 360" alt="Fusion 360">
                             </div>
                         </div>
                     </div>
@@ -1582,7 +1604,7 @@
 
                 <article class="project-card tilt" data-project="dobot" data-category="robotics vision">
                     <div class="project-image">
-                        <div class="cover-synth wipe-img"><img src="assets/object.png" alt="Object tracking icon"></div>
+                        <div class="cover-synth wipe-img"><img loading="lazy" decoding="async" src="assets/object.png" alt="Object tracking icon"></div>
                         <span class="project-year">2026</span>
                         <i class="fas fa-magnifying-glass-plus project-icon"></i>
                     </div>
@@ -1593,7 +1615,7 @@
                         <div class="project-links">
                             <button class="project-link" type="button">Details <i class="fas fa-arrow-right"></i></button>
                             <div class="project-tools-icons">
-                                <img src="assets/Visual_Studio_Code_1.35_icon.svg" class="tool-icon-small" title="VS Code" alt="VS Code">
+                                <img loading="lazy" decoding="async" src="assets/Visual_Studio_Code_1.35_icon.svg" class="tool-icon-small" title="VS Code" alt="VS Code">
                             </div>
                         </div>
                     </div>
@@ -1601,7 +1623,7 @@
 
                 <article class="project-card tilt" data-project="revolab" data-category="ros vision">
                     <div class="project-image">
-                        <img src="assets/swarm.png" alt="Robotics simulation scene" class="wipe-img">
+                        <img loading="lazy" decoding="async" src="assets/optimized/swarm.jpg" alt="Robotics simulation scene" class="wipe-img">
                         <span class="project-year">2026</span>
                         <i class="fas fa-magnifying-glass-plus project-icon"></i>
                     </div>
@@ -1612,7 +1634,7 @@
                         <div class="project-links">
                             <button class="project-link" type="button">Details <i class="fas fa-arrow-right"></i></button>
                             <div class="project-tools-icons">
-                                <img src="assets/Visual_Studio_Code_1.35_icon.svg" class="tool-icon-small" title="VS Code" alt="VS Code">
+                                <img loading="lazy" decoding="async" src="assets/Visual_Studio_Code_1.35_icon.svg" class="tool-icon-small" title="VS Code" alt="VS Code">
                             </div>
                         </div>
                     </div>
@@ -1620,7 +1642,7 @@
 
                 <article class="project-card tilt" data-project="nav" data-category="robotics ros">
                     <div class="project-image">
-                        <img src="assets/gazebo.jpg" alt="ROS indoor navigation in Gazebo" class="wipe-img">
+                        <img loading="lazy" decoding="async" src="assets/optimized/gazebo.jpg" alt="ROS indoor navigation in Gazebo" class="wipe-img">
                         <span class="project-year">ROS</span>
                         <i class="fas fa-magnifying-glass-plus project-icon"></i>
                     </div>
@@ -1631,8 +1653,8 @@
                         <div class="project-links">
                             <button class="project-link" type="button">Details <i class="fas fa-arrow-right"></i></button>
                             <div class="project-tools-icons">
-                                <img src="assets/ROS&ROS2.png" class="tool-icon-small" title="ROS" alt="ROS">
-                                <img src="assets/rasberry.png" class="tool-icon-small" title="Raspberry Pi" alt="Raspberry Pi">
+                                <img loading="lazy" decoding="async" src="assets/ROS&ROS2.png" class="tool-icon-small" title="ROS" alt="ROS">
+                                <img loading="lazy" decoding="async" src="assets/rasberry.png" class="tool-icon-small" title="Raspberry Pi" alt="Raspberry Pi">
                             </div>
                         </div>
                     </div>
@@ -1640,7 +1662,7 @@
 
                 <article class="project-card tilt" data-project="drone" data-category="pcb robotics">
                     <div class="project-image">
-                        <img src="assets/Quadpcb.JPG" alt="Drone flight controller PCB" class="wipe-img">
+                        <img loading="lazy" decoding="async" src="assets/optimized/Quadpcb.jpg" alt="Drone flight controller PCB" class="wipe-img">
                         <span class="project-year">PCB</span>
                         <i class="fas fa-magnifying-glass-plus project-icon"></i>
                     </div>
@@ -1651,7 +1673,7 @@
                         <div class="project-links">
                             <button class="project-link" type="button">Details <i class="fas fa-arrow-right"></i></button>
                             <div class="project-tools-icons">
-                                <img src="assets/Altuim logo2.png" class="tool-icon-small" title="Altium" alt="Altium">
+                                <img loading="lazy" decoding="async" src="assets/Altuim logo2.png" class="tool-icon-small" title="Altium" alt="Altium">
                             </div>
                         </div>
                     </div>
@@ -1707,39 +1729,39 @@
 
             <div class="media-grid" data-stagger>
                 <div class="media-item">
-                    <video preload="metadata" playsinline>
-                        <source src="assets/roya.mp4#t=0.1" type="video/mp4">
+                    <video preload="none" playsinline data-lazy-video>
+                        <source data-src="assets/roya.mp4#t=0.1" type="video/mp4">
                     </video>
                     <div class="play-overlay" role="button" aria-label="Play Roya TV interview"><span><i class="fas fa-play"></i></span></div>
                     <div class="media-label"><small>Media</small>Roya TV Interview</div>
                 </div>
                 <div class="media-item">
-                    <video preload="metadata" playsinline>
-                        <source src="assets/sofex.mp4#t=0.1" type="video/mp4">
+                    <video preload="none" playsinline data-lazy-video>
+                        <source data-src="assets/sofex.mp4#t=0.1" type="video/mp4">
                     </video>
                     <div class="play-overlay" role="button" aria-label="Play SOFEX 2024 video"><span><i class="fas fa-play"></i></span></div>
                     <div class="media-label"><small>Exhibition</small>SOFEX 2024 &middot; Mars Rover</div>
                 </div>
                 <div class="media-item">
-                    <video preload="metadata" playsinline>
-                        <source src="assets/jimex.mp4#t=0.1" type="video/mp4">
+                    <video preload="none" playsinline data-lazy-video>
+                        <source data-src="assets/jimex.mp4#t=0.1" type="video/mp4">
                     </video>
                     <div class="play-overlay" role="button" aria-label="Play JIMEX 2024 video"><span><i class="fas fa-play"></i></span></div>
                     <div class="media-label"><small>Exhibition</small>JIMEX 2024</div>
                 </div>
                 <div class="media-item">
-                    <video preload="metadata" playsinline>
-                        <source src="assets/Sight.mp4#t=0.1" type="video/mp4">
+                    <video preload="none" playsinline data-lazy-video>
+                        <source data-src="assets/Sight.mp4#t=0.1" type="video/mp4">
                     </video>
                     <div class="play-overlay" role="button" aria-label="Play IEEE SIGHT video"><span><i class="fas fa-play"></i></span></div>
                     <div class="media-label"><small>IEEE</small>R8 Best IEEE SIGHT Group Leader</div>
                 </div>
                 <div class="media-item">
-                    <img src="assets/marsrover.jpg" alt="Saif Khafajah with the Mars rover team at the Orange booth, SOFEX 2024">
+                    <img loading="lazy" decoding="async" src="assets/optimized/marsrover.jpg" alt="Saif Khafajah with the Mars rover team at the Orange booth, SOFEX 2024">
                     <div class="media-label"><small>SOFEX 2024</small>Rover team at the Orange booth</div>
                 </div>
                 <div class="media-item">
-                    <img src="assets/control.jpg" alt="Saif Khafajah operating the rover arm at SOFEX 2024">
+                    <img loading="lazy" decoding="async" src="assets/optimized/control.jpg" alt="Saif Khafajah operating the rover arm at SOFEX 2024">
                     <div class="media-label"><small>SOFEX 2024</small>Driving the rover arm live</div>
                 </div>
             </div>
@@ -1747,7 +1769,7 @@
     </section>
 
     <!-- Services -->
-    <section id="services" data-watermark="BUILD">
+    <section id="services">
         <div class="container">
             <div class="section-header reveal">
                 <span class="section-kicker">06 // Services</span>
@@ -1757,51 +1779,51 @@
 
             <div class="services-grid" data-stagger>
                 <div class="service-card tilt">
-                    <div class="service-img-wrapper"><img src="assets/course.jpg" alt="Teaching PCB design with Altium" class="wipe-img"><span class="service-num">01</span></div>
+                    <div class="service-img-wrapper"><img loading="lazy" decoding="async" src="assets/optimized/course.jpg" alt="Teaching PCB design with Altium" class="wipe-img"><span class="service-num">01</span></div>
                     <div class="service-content-inner">
                         <h3><i class="fas fa-chalkboard-teacher"></i> Training &amp; Workshops</h3>
                         <p>Hands-on courses in Altium PCB design, CAD, digital fabrication, electronics, smart systems, microprocessors, C++/MicroC and Python for student teams, universities and startups.</p>
-                        <div class="service-tools"><span>Tools</span><div class="toolbox-icons"><img src="assets/Altuim logo2.png" class="toolbox-icon" alt="Altium" title="Altium"><img src="assets/Fusion360_Logo.png" class="toolbox-icon" alt="Fusion 360" title="Fusion 360"><img src="assets/Visual_Studio_Code_1.35_icon.svg" class="toolbox-icon" alt="VS Code" title="VS Code"></div></div>
+                        <div class="service-tools"><span>Tools</span><div class="toolbox-icons"><img loading="lazy" decoding="async" src="assets/Altuim logo2.png" class="toolbox-icon" alt="Altium" title="Altium"><img loading="lazy" decoding="async" src="assets/Fusion360_Logo.png" class="toolbox-icon" alt="Fusion 360" title="Fusion 360"><img loading="lazy" decoding="async" src="assets/Visual_Studio_Code_1.35_icon.svg" class="toolbox-icon" alt="VS Code" title="VS Code"></div></div>
                     </div>
                 </div>
                 <div class="service-card tilt">
-                    <div class="service-img-wrapper"><img src="assets/prototyping.jpg" alt="Assembling a robot prototype" class="wipe-img"><span class="service-num">02</span></div>
+                    <div class="service-img-wrapper"><img loading="lazy" decoding="async" src="assets/prototyping.jpg" alt="Assembling a robot prototype" class="wipe-img"><span class="service-num">02</span></div>
                     <div class="service-content-inner">
                         <h3><i class="fas fa-tools"></i> Rapid Prototyping</h3>
                         <p>Concept to MVP with 3D printing, CNC routing and laser cutting, integrating sensors, actuators and controllers into working proof-of-concept hardware.</p>
-                        <div class="service-tools"><span>Tools</span><div class="toolbox-icons"><img src="assets/Fusion360_Logo.png" class="toolbox-icon" alt="Fusion 360" title="Fusion 360"><img src="assets/rasberry.png" class="toolbox-icon" alt="Raspberry Pi" title="Raspberry Pi"></div></div>
+                        <div class="service-tools"><span>Tools</span><div class="toolbox-icons"><img loading="lazy" decoding="async" src="assets/Fusion360_Logo.png" class="toolbox-icon" alt="Fusion 360" title="Fusion 360"><img loading="lazy" decoding="async" src="assets/rasberry.png" class="toolbox-icon" alt="Raspberry Pi" title="Raspberry Pi"></div></div>
                     </div>
                 </div>
                 <div class="service-card tilt">
-                    <div class="service-img-wrapper"><img src="assets/cubesat.jpg" alt="CubeSat structure CAD model" class="wipe-img"><span class="service-num">03</span></div>
+                    <div class="service-img-wrapper"><img loading="lazy" decoding="async" src="assets/optimized/cubesat.jpg" alt="CubeSat structure CAD model" class="wipe-img"><span class="service-num">03</span></div>
                     <div class="service-content-inner">
                         <h3><i class="fas fa-cogs"></i> Mechanical Design</h3>
                         <p>Robot chassis, enclosures and mechanisms modelled in Fusion 360 or SolidWorks and prepared for 3D printing or CNC machining, with assembly-ready drawings.</p>
-                        <div class="service-tools"><span>Tools</span><div class="toolbox-icons"><img src="assets/Fusion360_Logo.png" class="toolbox-icon" alt="Fusion 360" title="Fusion 360"><img src="assets/autodesk_logo.png" class="toolbox-icon" alt="Autodesk" title="Autodesk"></div></div>
+                        <div class="service-tools"><span>Tools</span><div class="toolbox-icons"><img loading="lazy" decoding="async" src="assets/Fusion360_Logo.png" class="toolbox-icon" alt="Fusion 360" title="Fusion 360"><img loading="lazy" decoding="async" src="assets/autodesk_logo.png" class="toolbox-icon" alt="Autodesk" title="Autodesk"></div></div>
                     </div>
                 </div>
                 <div class="service-card tilt">
-                    <div class="service-img-wrapper"><img src="assets/pcb.jpg" alt="Altium PCB design" class="wipe-img"><span class="service-num">04</span></div>
+                    <div class="service-img-wrapper"><img loading="lazy" decoding="async" src="assets/pcb.jpg" alt="Altium PCB design" class="wipe-img"><span class="service-num">04</span></div>
                     <div class="service-content-inner">
                         <h3><i class="fas fa-microchip"></i> PCB Design</h3>
                         <p>Schematic capture and multi-layer layout in Altium Designer: motor drivers, power distribution, sensor interfaces and controller shields, with DFM in mind.</p>
-                        <div class="service-tools"><span>Tools</span><div class="toolbox-icons"><img src="assets/Altuim logo2.png" class="toolbox-icon" alt="Altium" title="Altium"></div></div>
+                        <div class="service-tools"><span>Tools</span><div class="toolbox-icons"><img loading="lazy" decoding="async" src="assets/Altuim logo2.png" class="toolbox-icon" alt="Altium" title="Altium"></div></div>
                     </div>
                 </div>
                 <div class="service-card tilt">
-                    <div class="service-img-wrapper"><img src="assets/swarm.png" alt="Multi-robot simulation" class="wipe-img"><span class="service-num">05</span></div>
+                    <div class="service-img-wrapper"><img loading="lazy" decoding="async" src="assets/optimized/swarm.jpg" alt="Multi-robot simulation" class="wipe-img"><span class="service-num">05</span></div>
                     <div class="service-content-inner">
                         <h3><i class="fas fa-code-branch"></i> ROS Development</h3>
                         <p>Navigation, SLAM and simulation in Gazebo/RViz, plus custom nodes and robot behaviours in C++ and Python for ROS 1 and ROS 2.</p>
-                        <div class="service-tools"><span>Tools</span><div class="toolbox-icons"><img src="assets/ROS&ROS2.png" class="toolbox-icon" alt="ROS" title="ROS"><img src="assets/Visual_Studio_Code_1.35_icon.svg" class="toolbox-icon" alt="VS Code" title="VS Code"></div></div>
+                        <div class="service-tools"><span>Tools</span><div class="toolbox-icons"><img loading="lazy" decoding="async" src="assets/ROS&ROS2.png" class="toolbox-icon" alt="ROS" title="ROS"><img loading="lazy" decoding="async" src="assets/Visual_Studio_Code_1.35_icon.svg" class="toolbox-icon" alt="VS Code" title="VS Code"></div></div>
                     </div>
                 </div>
                 <div class="service-card tilt">
-                    <div class="service-img-wrapper"><img src="assets/Quadpcb.JPG" alt="Embedded controller board" class="wipe-img"><span class="service-num">06</span></div>
+                    <div class="service-img-wrapper"><img loading="lazy" decoding="async" src="assets/optimized/Quadpcb.jpg" alt="Embedded controller board" class="wipe-img"><span class="service-num">06</span></div>
                     <div class="service-content-inner">
                         <h3><i class="fas fa-laptop-code"></i> Embedded &amp; Edge AI</h3>
                         <p>Firmware for microcontrollers and control loops, and camera-based perception with OpenCV running on Raspberry Pi and NVIDIA Jetson Nano.</p>
-                        <div class="service-tools"><span>Tools</span><div class="toolbox-icons"><img src="assets/Visual_Studio_Code_1.35_icon.svg" class="toolbox-icon" alt="VS Code" title="VS Code"><img src="assets/rasberry.png" class="toolbox-icon" alt="Raspberry Pi" title="Raspberry Pi"></div></div>
+                        <div class="service-tools"><span>Tools</span><div class="toolbox-icons"><img loading="lazy" decoding="async" src="assets/Visual_Studio_Code_1.35_icon.svg" class="toolbox-icon" alt="VS Code" title="VS Code"><img loading="lazy" decoding="async" src="assets/rasberry.png" class="toolbox-icon" alt="Raspberry Pi" title="Raspberry Pi"></div></div>
                     </div>
                 </div>
             </div>
@@ -1819,19 +1841,19 @@
 
             <div class="edu-grid" data-stagger>
                 <div class="edu-card glass glow-border">
-                    <div class="edu-logo"><img src="assets/bau_logo.png" alt="Al-Balqa Applied University"></div>
+                    <div class="edu-logo"><img loading="lazy" decoding="async" src="assets/optimized/bau_logo.png" alt="Al-Balqa Applied University"></div>
                     <span class="edu-date">Expected Jul 2026</span>
                     <h3>B.Sc. in Mechatronics Engineering</h3>
                     <h4>Al-Balqa Applied University, Amman, Jordan</h4>
                     <p>Graduation project: the vision-guided 5-DOF industrial sorting arm with its own Altium shield PCB.</p>
                 </div>
                 <div class="edu-card glass glow-border">
-                    <div class="edu-logo"><img src="assets/mitx_logo.png" alt="MITx"></div>
+                    <div class="edu-logo"><img loading="lazy" decoding="async" src="assets/mitx_logo.png" alt="MITx"></div>
                     <span class="edu-date">Online Program</span>
                     <h3>Space Shuttle Engineering</h3>
                     <h4>Massachusetts Institute of Technology (MIT)</h4>
                     <p>Systems-level view of launch vehicle and spacecraft engineering, applied here to structural design work such as CubeSat concepts.</p>
-                    <div class="edu-cube"><img src="assets/cubesat.jpg" alt="CubeSat structure concept in Fusion 360"></div>
+                    <div class="edu-cube"><img loading="lazy" decoding="async" src="assets/optimized/cubesat.jpg" alt="CubeSat structure concept in Fusion 360"></div>
                 </div>
                 <div class="edu-card glass glow-border">
                     <div class="edu-logo"><i class="fas fa-language" style="font-size:2rem;color:var(--orange-strong)"></i></div>
@@ -1847,7 +1869,7 @@
     </section>
 
     <!-- Contact -->
-    <section id="contact" data-watermark="HELLO">
+    <section id="contact">
         <div class="container">
             <div class="section-header reveal">
                 <span class="section-kicker">08 // Contact</span>
@@ -1867,7 +1889,7 @@
                     </div>
 
                     <div class="map-card" aria-hidden="true">
-                        <img src="assets/location.jpg" alt="">
+                        <img loading="lazy" decoding="async" src="assets/optimized/location.jpg" alt="">
                         <i class="fas fa-location-dot map-pin"></i><span class="map-pulse"></span>
                     </div>
 
@@ -1913,6 +1935,14 @@
         </div>
     </footer>
 
+    <!-- Section navigator: replaces the top nav bar on wide screens (links built by JS) -->
+    <nav class="secnav" id="secnav" aria-label="Sections">
+        <div class="secnav-glass top" aria-hidden="true"></div>
+        <div class="secnav-glass bottom" aria-hidden="true"></div>
+        <div id="secnavLetters" aria-hidden="true"></div>
+    </nav>
+    <a href="assets/SaifKhafajahResume.pdf" class="desk-cv" download><i class="fas fa-download" aria-hidden="true"></i> CV</a>
+
     <!-- Scroll ruler (decorative; built by JS) -->
     <div class="ruler" id="ruler" aria-hidden="true">
         <div class="ruler-scale" id="rulerScale"></div>
@@ -1939,36 +1969,91 @@
         $('#year').textContent = new Date().getFullYear();
 
         /* =========================================
-           1. LOADING SCREEN (progress counter)
-           ========================================= */
-        const loader = $('#loading-screen');
-        const loaderPct = $('#loader-pct'), loaderBar = $('#loader-bar'), loaderMsg = $('#loader-msg');
-        const msgs = ['Initializing systems', 'Loading kinematics', 'Compiling firmware', 'Calibrating sensors', 'Ready'];
-        let pct = 0, loaderDone = false;
-        const loaderTick = setInterval(() => {
-            pct = Math.min(100, pct + 4 + Math.random() * 9);
-            loaderPct.textContent = Math.floor(pct) + '%';
-            loaderBar.style.width = pct + '%';
-            loaderMsg.textContent = msgs[Math.min(msgs.length - 1, Math.floor(pct / 25))];
-            if (pct >= 100) { clearInterval(loaderTick); setTimeout(hideLoader, 350); }
-        }, 110);
-        function hideLoader() {
-            if (loaderDone) return; loaderDone = true;
-            loader.classList.add('hidden');
-            document.body.classList.remove('no-scroll');
-            setTimeout(() => { loader.style.display = 'none'; }, 900);
-        }
-        document.body.classList.add('no-scroll');
-        setTimeout(hideLoader, 4200); // safety
-
-        /* =========================================
            2. HERO TITLE LETTER REVEAL + TYPEWRITER
            ========================================= */
-        let letterIndex = 0;
-        $$('#heroTitle .word').forEach(word => {
-            const text = word.getAttribute('data-text');
-            word.innerHTML = text.split('').map(ch => `<span class="ch" style="--i:${letterIndex++}">${ch}</span>`).join('');
+        /* Intro: the name forms out of the logo mark (no loading screen).
+           0-0.3s   logo fades in, centred where the whole name will sit
+           0.35s+   logo glides left into its slot while the letters slide out from behind it,
+                    clipped at the logo's edge so they emerge from it (each wrapped line does this
+                    with its own first glyph). The CSS above then brings in the interface (~0.7s)
+                    and the rest of the hero copy (~1.05s). */
+        const heroTitle = $('#heroTitle');
+        // Cube mark drawn as a circuit trace: outer hex + inner "Y" traces, solder pads at each node, and a signal pulse
+        const HEX = 'M32 8 54 20v24L32 56 10 44V20z';
+        const PADS = [[32, 8], [54, 20], [54, 44], [32, 56], [10, 44], [10, 20]]
+            .map(([x, y], i) => `<circle class="pad" cx="${x}" cy="${y}" r="3" style="--pd:${(0.04 + i * 0.07).toFixed(2)}s"/>`).join('');
+        const LOGO_SVG = '<svg viewBox="0 0 64 64" aria-hidden="true">' +
+            `<path class="trace t-outer" pathLength="1" d="${HEX}" fill="none" stroke="#FC5C02" stroke-width="4.5" stroke-linejoin="round"/>` +
+            '<path class="trace t-inner" pathLength="1" d="M10 20l22 12 22-12M32 32v24" fill="none" stroke="#E2CEAE" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/>' +
+            `<path class="pulse" pathLength="1" d="${HEX}" fill="none" stroke="#FBF6EE" stroke-width="5" stroke-linecap="round"/>` +
+            PADS + '<circle class="pad pad-core" cx="32" cy="32" r="3.4" style="--pd:0.38s"/></svg>';
+        $$('.word', heroTitle).forEach((word, w) => {
+            const chars = word.getAttribute('data-text').split('');
+            word.innerHTML = (w === 0 ? `<span class="ch hero-logo" aria-hidden="true">${LOGO_SVG}</span>` : '') +
+                chars.map((ch, k) => `<span class="ch" style="--k:${k}">${ch}</span>`).join('');
         });
+        (function runIntro() {
+            const WORD_AT = 0.5, WORD_DUR = 0.85, LOGO_FADE = 0.3; // name starts once the logo's circuit trace has drawn
+            const glyphs = $$('.ch', heroTitle);
+            const finish = () => {
+                glyphs.forEach(g => { g.style.transform = ''; g.style.opacity = ''; g.style.clipPath = ''; });
+                document.documentElement.classList.remove('intro-pending');
+                heroTitle.classList.remove('tracing'); // trace effects end by ~1.2s; this guarantees the drawn default state
+                heroTitle.classList.add('formed');
+            };
+            if (reduceMotion) { finish(); return; }
+            document.documentElement.classList.add('intro-pending');
+            const clamp01 = v => Math.min(1, Math.max(0, v));
+            const inOut = t => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+            const out3 = t => 1 - Math.pow(1 - t, 3);
+            let lines = null, t0 = null, done = false;
+            function measureLines() {
+                // Group glyphs by the line they render on (the name wraps to two lines on phones)
+                const rects = glyphs.map(g => g.getBoundingClientRect());
+                const groups = [];
+                glyphs.forEach((g, i) => {
+                    const r = rects[i];
+                    let line = groups.find(l => Math.abs(l.top - r.top) < r.height * 0.5);
+                    if (!line) { line = { top: r.top, items: [] }; groups.push(line); }
+                    line.items.push({ el: g, left: r.left, right: r.right, width: r.width });
+                });
+                return groups.map(l => {
+                    const anchor = l.items[0], rest = l.items.slice(1), last = l.items[l.items.length - 1];
+                    return {
+                        anchor, rest,
+                        glide: (anchor.left + last.right) / 2 - (anchor.left + anchor.width / 2), // anchor starts centred on the line
+                        tuck: -(last.right - anchor.right),                                       // others start hidden behind the anchor
+                    };
+                });
+            }
+            function frame(now) {
+                if (done) return;
+                if (t0 === null) { t0 = now; lines = measureLines(); heroTitle.classList.add('tracing'); }
+                const t = (now - t0) / 1000;
+                const m = inOut(clamp01((t - WORD_AT) / WORD_DUR));
+                const slide = out3(clamp01((t - WORD_AT) / WORD_DUR));
+                lines.forEach(line => {
+                    const ax = line.glide * (1 - m);
+                    line.anchor.el.style.transform = `translate3d(${ax.toFixed(1)}px,0,0)`;
+                    // The logo reveals itself by drawing (CSS); other line anchors (phones: "K") fade in
+                    line.anchor.el.style.opacity = line.anchor.el.classList.contains('hero-logo') ? '1' : clamp01(t / LOGO_FADE).toFixed(3);
+                    const edge = line.anchor.right + ax;     // letters are only visible right of the anchor's edge
+                    const dx = line.tuck * (1 - slide);
+                    line.rest.forEach(g => {
+                        g.el.style.transform = `translate3d(${dx.toFixed(1)}px,0,0)`;
+                        const hidden = edge - (g.left + dx);
+                        g.el.style.clipPath = hidden > 0.5 ? `inset(-20% 0 -20% ${Math.min(hidden, g.width + 1).toFixed(1)}px)` : '';
+                    });
+                });
+                document.documentElement.classList.remove('intro-pending'); // first frame painted with the start state
+                if (t >= WORD_AT + WORD_DUR) { done = true; finish(); return; }
+                requestAnimationFrame(frame);
+            }
+            const start = () => requestAnimationFrame(frame);
+            if (document.fonts && document.fonts.ready) document.fonts.ready.then(start, start); else start();
+            // If frames never arrive (e.g. the tab loaded in the background), just show the finished name
+            setTimeout(() => { if (t0 === null) { done = true; finish(); } }, 3000);
+        })();
 
         const textElement = $('#typing-text');
         const phrases = [
@@ -1988,7 +2073,7 @@
             else if (isDeleting && charIndex === 0) { isDeleting = false; phraseIndex = (phraseIndex + 1) % phrases.length; speed = 450; }
             setTimeout(type, speed);
         }
-        setTimeout(type, 1600);
+        setTimeout(type, 1500); // starts once the hero copy has appeared
 
         /* =========================================
            3. CINEMATIC BACKGROUND: PARALLAX, ZOOM, NETWORK
@@ -2067,17 +2152,9 @@
         }
 
         /* =========================================
-           4. CUSTOM CURSOR + MAGNETIC BUTTONS
+           4. MAGNETIC BUTTONS, CARD TILT, SPOTLIGHT
            ========================================= */
         if (finePointer && !reduceMotion) {
-            const dot = $('.cursor-dot'), ring = $('.cursor-ring');
-            let mx = -100, my = -100, rx = -100, ry = -100;
-            document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; dot.style.transform = `translate(${mx}px, ${my}px)`; });
-            (function loop() { rx += (mx - rx) * 0.18; ry += (my - ry) * 0.18; ring.style.transform = `translate(${rx}px, ${ry}px)`; requestAnimationFrame(loop); })();
-            const hoverables = 'a, button, .project-card, .tilt, .play-overlay, .filter-btn, input, textarea';
-            document.addEventListener('mouseover', e => { if (e.target.closest(hoverables)) ring.classList.add('is-hover'); });
-            document.addEventListener('mouseout', e => { if (e.target.closest(hoverables)) ring.classList.remove('is-hover'); });
-
             $$('.magnetic').forEach(btn => {
                 btn.addEventListener('mousemove', e => {
                     const r = btn.getBoundingClientRect();
@@ -2179,7 +2256,6 @@
         const progressBar = $('#scroll-progress'), navbar = $('#navbar'), backTop = $('#back-to-top');
         const ring = $('#back-to-top .ring-fg'), RING_LEN = 2 * Math.PI * 23;
         if (ring) { ring.style.strokeDasharray = RING_LEN; ring.style.strokeDashoffset = RING_LEN; }
-        const watermarks = $$('[data-watermark]');
         function onScroll() {
             const max = document.documentElement.scrollHeight - window.innerHeight;
             const p = max > 0 ? window.scrollY / max : 0;
@@ -2188,15 +2264,6 @@
             navbar.classList.toggle('scrolled', window.scrollY > 50);
             backTop.classList.toggle('visible', window.scrollY > 600);
             updateTimeline();
-            if (!reduceMotion) {
-                const vh = window.innerHeight;
-                watermarks.forEach(s => {
-                    const r = s.getBoundingClientRect();
-                    if (r.bottom < 0 || r.top > vh) return;
-                    const t = (r.top + r.height / 2 - vh / 2) / (vh + r.height); // -0.5 .. 0.5
-                    s.style.setProperty('--wmx', (t * 260).toFixed(1) + 'px');
-                });
-            }
         }
         window.addEventListener('scroll', onScroll, { passive: true });
         window.addEventListener('resize', updateTimeline);
@@ -2213,6 +2280,176 @@
             });
         }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
         $$('section[id]').forEach(s => sectionIO.observe(s));
+
+        /* =========================================
+           5.4 PROJECT ORBIT
+           Project cards ride spiral arms out of the name: born small near the centre, they drift
+           outward (a slow conveyor, also pushed by scrolling, reversibly) and grow until they leave
+           the screen. The spiral turns slowly while cards stay upright and float. Track lines carry
+           orange pulses; a reveal wave sweeps out once the name has formed. Hovering brings the
+           system to rest; clicking a card opens that project.
+           ========================================= */
+        (function initOrbit() {
+            const hero = $('#hero'), box = $('#galaxy');
+            if (!hero || !box) return;
+            const canvas = $('.galaxy-tracks', box), layer = $('.galaxy-cards', box), g2 = canvas.getContext('2d');
+            const T = 'assets/optimized/thumbs/';
+            // [thumbnail, project id or #section, label]
+            const MEDIA = [
+                ['arm', 'arm', '5-DOF arm'], ['rover', 'rover', 'Mars rover'], ['gazebo', 'nav', 'ROS navigation'],
+                ['quadpcb', 'drone', 'Flight PCB'], ['swarm', 'revolab', 'RevoLab sim'], ['arm-cad', 'arm', 'Arm CAD'],
+                ['rover-team', 'rover', 'SOFEX 2024'], ['course', '#services', 'Altium training'], ['f450', 'drone', 'F450 airframe'],
+                ['pcb', 'arm', 'Shield PCB'], ['arm4', 'arm', 'Arm build'], ['rover-arm', 'rover', 'Rover arm'],
+                ['prototyping', '#services', 'Prototyping'], ['cubesat', '#education', 'CubeSat CAD'], ['armr', 'arm', 'Arm render'],
+                ['fablab', '#about', 'Orange FabLab'],
+            ];
+            const CARDS_AT = 1.1, WAVE_DUR = 2.6;        // reveal starts as the name finishes forming
+            const IDLE = 0.57, SCRUB = 0.2;               // journeys per minute / per 1000px of scroll
+            const SPIN = -50 * Math.PI / 180;             // radians per minute (whole spiral)
+            const WOBBLE = 6, WOBBLE_HZ = 0.25, FIELD = 320, TUG = 10;
+            const clamp01 = v => Math.min(1, Math.max(0, v));
+            const outCubic = t => 1 - Math.pow(1 - t, 3);
+            const frac = v => v - Math.floor(v);
+
+            let cards = [], arms = 6, slotsPerArm = 3, W = 0, H = 0, cx = 0, cy = 0, rMax = 1, b = 1, thB = 0, thE = 1, cardH = 100;
+            let idle = 0, spin = 0, holdK = 0, hold = -1, t0 = null, last = 0, mouse = null;
+
+            function open(m) {
+                if (m[1].startsWith('#')) { const el = document.querySelector(m[1]); if (el) el.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' }); }
+                else openProject(m[1]);
+            }
+            function build() {
+                const mobile = window.innerWidth < 768;
+                arms = mobile ? 3 : 6;
+                const n = mobile ? 9 : 18;
+                slotsPerArm = Math.ceil(n / arms);
+                layer.textContent = '';
+                cards = Array.from({ length: n }, (_, i) => {
+                    const m = MEDIA[i % MEDIA.length];
+                    const el = document.createElement('div');
+                    el.className = 'galaxy-card';
+                    el.innerHTML = `<img src="${T}${m[0]}.jpg" alt="" loading="lazy" decoding="async"><span class="gc-label">${m[2]}</span>`;
+                    el.addEventListener('click', () => open(m));
+                    el.addEventListener('mouseenter', () => { hold = i; });
+                    el.addEventListener('mouseleave', () => { if (hold === i) hold = -1; });
+                    layer.appendChild(el);
+                    return { el, arm: i % arms, slot: Math.floor(i / arms), jitter: (Math.random() - 0.5) * 0.35, seed: Math.random() * 6.283, hover: 0, z: -1, key: '' };
+                });
+                layout();
+            }
+            function layout() {
+                const mobile = window.innerWidth < 768;
+                W = hero.clientWidth; H = hero.clientHeight;
+                const dpr = Math.min(2, window.devicePixelRatio || 1);
+                canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
+                g2.setTransform(dpr, 0, 0, dpr, 0, 0);
+                const hr = hero.getBoundingClientRect(), tr = $('#heroTitle').getBoundingClientRect();
+                cx = tr.left + tr.width / 2 - hr.left; cy = tr.top + tr.height / 2 - hr.top;   // spiral centre = the name
+                const halfDiag = Math.hypot(W, H) / 2;
+                rMax = halfDiag * (mobile ? 0.8 : 0.7);
+                const turns = mobile ? 0.7 : 1.05;
+                b = rMax / (turns * 2 * Math.PI);                  // Archimedean spiral r = b * theta
+                thB = (rMax * 0.08) / b;                           // birth radius, just around the name
+                thE = (halfDiag * 1.3) / b;                        // exit well past the screen edge
+                cardH = Math.min(H * (mobile ? 0.15 : 0.17), 132);
+                cards.forEach(c => { c.el.style.width = (cardH * 4 / 3).toFixed(0) + 'px'; c.el.style.height = cardH.toFixed(0) + 'px'; });
+            }
+            hero.addEventListener('mousemove', e => { const r = hero.getBoundingClientRect(); mouse = { x: e.clientX - r.left, y: e.clientY - r.top }; });
+            hero.addEventListener('mouseleave', () => { mouse = null; });
+
+            function drawTracks(waveR, t) {
+                g2.clearRect(0, 0, W, H);
+                g2.save();
+                g2.beginPath(); g2.arc(cx, cy, Math.max(0, waveR), 0, Math.PI * 2); g2.clip();   // reveal wave
+                g2.lineWidth = 1;
+                for (let a = 0; a < arms; a++) {
+                    const off = a * Math.PI * 2 / arms + spin;
+                    g2.strokeStyle = 'rgba(226, 206, 174, 0.11)';
+                    g2.beginPath();
+                    for (let th = thB * 0.5; th <= thE; th += 0.04) {
+                        const r = b * th, x = cx + r * Math.cos(th + off), y = cy + r * Math.sin(th + off);
+                        th === thB * 0.5 ? g2.moveTo(x, y) : g2.lineTo(x, y);
+                    }
+                    g2.stroke();
+                    // Orange pulse travelling outward along the arm
+                    const p0 = thB + frac(t * 0.09 + a / arms) * (thE - thB), len = 0.9;
+                    g2.lineWidth = 2;
+                    for (let k = 0; k < 10; k++) {
+                        const th1 = p0 + (k / 10) * len, th2 = p0 + ((k + 1) / 10) * len;
+                        g2.strokeStyle = `rgba(252, 92, 2, ${(0.55 * (k + 1) / 10).toFixed(3)})`;
+                        g2.beginPath();
+                        g2.moveTo(cx + b * th1 * Math.cos(th1 + off), cy + b * th1 * Math.sin(th1 + off));
+                        g2.lineTo(cx + b * th2 * Math.cos(th2 + off), cy + b * th2 * Math.sin(th2 + off));
+                        g2.stroke();
+                    }
+                    g2.lineWidth = 1;
+                }
+                // Dial of ticks around the name, turning with the spiral
+                const rt = rMax * 0.42;
+                g2.strokeStyle = 'rgba(226, 206, 174, 0.16)';
+                g2.beginPath();
+                for (let k = 0; k < 120; k++) {
+                    const ang = k * Math.PI * 2 / 120 + spin, l = k % 10 === 0 ? 10 : 4;
+                    g2.moveTo(cx + rt * Math.cos(ang), cy + rt * Math.sin(ang));
+                    g2.lineTo(cx + (rt + l) * Math.cos(ang), cy + (rt + l) * Math.sin(ang));
+                }
+                g2.stroke();
+                g2.restore();
+            }
+
+            function frame(now) {
+                requestAnimationFrame(frame);
+                if (t0 === null) { t0 = now; last = now; }
+                const dt = Math.min(0.05, (now - last) / 1000); last = now;
+                const t = (now - t0) / 1000;
+                const hr = hero.getBoundingClientRect();
+                if (hr.bottom < 0 || hr.top > window.innerHeight) return;   // offscreen: skip work
+
+                const intro = reduceMotion ? 1 : clamp01((t - CARDS_AT) / WAVE_DUR);
+                const waveR = outCubic(intro) * Math.hypot(W, H) * 0.75;
+                holdK += ((hold >= 0 ? 1 : 0) - holdK) * (1 - Math.exp(-dt / 0.25));
+                if (!reduceMotion) {
+                    const burst = 1 + 2 * (1 - outCubic(clamp01((t - CARDS_AT) / 2)));   // quick start, then settles
+                    idle += dt * IDLE / 60 * burst * (1 - holdK);
+                    spin += dt * SPIN / 60 * (1 - holdK);
+                }
+                const G = idle + window.scrollY * SCRUB / 1000;
+                drawTracks(waveR, reduceMotion ? 0 : t);
+
+                cards.forEach((c, i) => {
+                    const p = frac((c.slot + 0.5 + c.jitter) / slotsPerArm + G);
+                    const th = thB + p * (thE - thB), r = b * th;
+                    const ang = th + c.arm * Math.PI * 2 / arms + spin;
+                    let x = cx + r * Math.cos(ang), y = cy + r * Math.sin(ang);
+                    if (!reduceMotion) {
+                        x += WOBBLE * Math.sin(t * 6.283 * WOBBLE_HZ + c.seed);
+                        y += WOBBLE * Math.cos(t * 6.283 * WOBBLE_HZ * 0.8 + c.seed * 1.3);
+                    }
+                    if (mouse) {   // gentle pull toward the pointer
+                        const dx = mouse.x - x, dy = mouse.y - y, d = Math.hypot(dx, dy);
+                        if (d < FIELD && d > 1) { const k = TUG * (1 - d / FIELD); x += dx / d * k; y += dy / d * k; }
+                    }
+                    c.hover += ((hold === i ? 1 : 0) - c.hover) * (1 - Math.exp(-dt / 0.12));
+                    const s = (0.3 + 0.7 * clamp01(r / rMax)) * (1 + 0.12 * c.hover);
+                    const alpha = Math.min(clamp01(p / 0.06), clamp01((waveR - r) / 140));
+                    const key = `${x.toFixed(1)},${y.toFixed(1)},${s.toFixed(3)},${alpha.toFixed(2)}`;
+                    if (key !== c.key) {
+                        c.key = key;
+                        c.el.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 0) translate(-50%, -50%) scale(${s.toFixed(3)})`;
+                        c.el.style.opacity = alpha.toFixed(2);
+                        c.el.style.visibility = alpha < 0.01 ? 'hidden' : '';
+                    }
+                    const z = hold === i ? 999 : Math.round(r / 10);   // outer (bigger) cards in front
+                    if (z !== c.z) { c.z = z; c.el.style.zIndex = z; }
+                });
+            }
+
+            build();
+            window.addEventListener('resize', () => { const mobileNow = window.innerWidth < 768; if ((arms === 3) !== mobileNow) build(); else layout(); });
+            if (document.fonts && document.fonts.ready) document.fonts.ready.then(layout);
+            window.addEventListener('load', layout);
+            requestAnimationFrame(frame);
+        })();
 
         /* =========================================
            5.5 SCROLL RULER
@@ -2296,6 +2533,160 @@
             window.addEventListener('load', layout);
             if ('ResizeObserver' in window) new ResizeObserver(layout).observe(document.body);
             layout();
+            requestAnimationFrame(frame);
+        })();
+
+        /* =========================================
+           5.6 SECTION NAVIGATOR
+           Scroll-driven, three states per section name:
+             queue  - small + horizontal in the bottom-right stack while the section is below the fold
+             rail   - letters turn 90deg and ride up the right edge with the section as it scrolls
+             stack  - near the top the letters swing on a curved path into the top-right stack;
+                      the newest one is large (current) and the previous one shrinks in step.
+           Everything is a function of scroll position, so scrolling back reverses it.
+           ========================================= */
+        (function initSecNav() {
+            const root = $('#secnav'), layer = $('#secnavLetters');
+            if (!root || !layer) return;
+            const glassTop = $('.secnav-glass.top', root), glassBot = $('.secnav-glass.bottom', root);
+            const BASE = 30;                 // px, font-size of a full-size label
+            const SMALL = 0.46, RAIL = 0.46;  // scales for stacks and the vertical rail
+            const SLOT = 19, GAP = 10;        // stack line spacing, extra gap above the current label
+            const RIGHT = 80, RAIL_RIGHT = 70, TOP = 84, BOTTOM = 44;
+            const FLIP_ZONE = 240, DETACH_ZONE = 170; // scroll distance over which each transition happens
+            const STAGGER = 0.07, ARC = -70;          // per-letter lag, sideways bulge of the curved path
+            const A_SMALL = 0.42, A_RAIL = 0.62;      // opacity of small labels / rail labels
+            const sections = [['hero', 'Home'], ['about', 'About'], ['skills', 'Skills'], ['experience', 'Experience'],
+                ['projects', 'Projects'], ['keynotes', 'Keynotes'], ['services', 'Services'], ['education', 'Education'], ['contact', 'Contact']]
+                .map(([id, name]) => ({ id, name: name.toUpperCase(), el: document.getElementById(id), letters: [], adv: [], cum: [], total: 0, top: 0 }))
+                .filter(s => s.el);
+
+            sections.forEach(sec => {
+                sec.name.split('').forEach(ch => {
+                    const sp = document.createElement('span');
+                    sp.className = 'secnav-letter'; sp.textContent = ch; layer.appendChild(sp);
+                    sec.letters.push({ sp, key: '' });
+                });
+                const a = document.createElement('a');
+                a.className = 'secnav-hit'; a.href = '#' + sec.id;
+                a.setAttribute('aria-label', sec.name.charAt(0) + sec.name.slice(1).toLowerCase());
+                const hov = on => () => sec.letters.forEach(l => l.sp.classList.toggle('hov', on));
+                a.addEventListener('mouseenter', hov(true)); a.addEventListener('mouseleave', hov(false));
+                a.addEventListener('focus', hov(true)); a.addEventListener('blur', hov(false));
+                root.appendChild(a); sec.hit = a;
+            });
+
+            const ctx = document.createElement('canvas').getContext('2d');
+            let heroBottom = 0;
+            function measure() {
+                ctx.font = `700 ${BASE}px Orbitron, sans-serif`;
+                sections.forEach(sec => {
+                    let c = 0;
+                    sec.adv = sec.letters.map(l => ctx.measureText(l.sp.textContent).width + 1);
+                    sec.cum = sec.adv.map(w => { const v = c; c += w; return v; });
+                    sec.total = c;
+                    sec.top = sec.el.offsetTop;
+                });
+                heroBottom = sections[0].el.offsetTop + sections[0].el.offsetHeight;
+            }
+
+            const clamp01 = v => Math.min(1, Math.max(0, v));
+            const ease = t => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+            // Letter j of `sec`, right-aligned horizontally at line y
+            const stackPos = (sec, j, y, s, a, vw) => ({ x: vw - RIGHT - (sec.total - sec.cum[j] - sec.adv[j] / 2) * s, y, r: 0, s, a });
+            // Letter j of `sec`, rotated -90deg and stacked upwards from the section's top edge (reads bottom-to-top)
+            const railPos = (sec, j, ya, vw) => ({ x: vw - RAIL_RIGHT, y: ya + (sec.total - sec.cum[j] - sec.adv[j] / 2) * RAIL, r: -90, s: RAIL, a: A_RAIL });
+
+            let smooth = window.scrollY, lastS = NaN, dirty = true;
+            function frame() {
+                const target = window.scrollY;
+                if (reduceMotion || Math.abs(target - smooth) < 0.3) smooth = target; else smooth += (target - smooth) * 0.18;
+                if (root.offsetWidth && (dirty || smooth !== lastS)) { // skip while hidden or idle
+                    if (dirty) measure();
+                    dirty = false; lastS = smooth;
+                    render(smooth);
+                }
+                requestAnimationFrame(frame);
+            }
+
+            function render(S) {
+                const vw = window.innerWidth, vh = window.innerHeight, n = sections.length;
+                const FLIP_AT = Math.round(vh * 0.16);
+                const st = sections.map((sec, i) => {
+                    const ya = sec.top - S;                          // section's top edge on screen
+                    const flip = i === 0 ? 1 : clamp01((FLIP_AT + FLIP_ZONE - ya) / FLIP_ZONE);
+                    return { ya, flip, detach: 1, yq: 0, railLen: sec.total * RAIL };
+                });
+                // Bottom queue: upcoming labels wait here; the queue closes up as labels leave for the rail
+                let queued = 0;
+                for (let i = n - 1; i >= 1; i--) {
+                    const s = st[i];
+                    s.yq = vh - BOTTOM - SLOT * queued;
+                    s.detach = clamp01((s.yq + DETACH_ZONE - (s.ya + s.railLen)) / DETACH_ZONE);
+                    queued += 1 - s.detach;
+                }
+                let flipped = 0, partial = 0;
+                st.forEach(s => { if (s.flip >= 1) flipped++; else if (s.flip > 0) partial += s.flip; });
+
+                sections.forEach((sec, i) => {
+                    const s = st[i], N = sec.letters.length;
+                    let t, reverse = true, from, to;
+                    if (s.flip > 0) {
+                        t = s.flip;
+                        from = j => railPos(sec, j, s.ya, vw);
+                        if (s.flip >= 1) {
+                            const k = i === flipped - 1 ? partial : 1; // newest flipped = current; shrinks as the next one arrives
+                            const y = TOP + i * SLOT + GAP * (1 - k), sc = 1 - (1 - SMALL) * k, al = 1 - (1 - A_SMALL) * k;
+                            to = j => stackPos(sec, j, y, sc, al, vw);
+                        } else {
+                            to = j => stackPos(sec, j, TOP + i * SLOT + GAP, 1, 1, vw);
+                        }
+                    } else if (s.detach < 1) {
+                        t = s.detach;
+                        from = j => stackPos(sec, j, s.yq, SMALL, A_SMALL, vw);
+                        to = j => railPos(sec, j, s.ya, vw);
+                    } else {
+                        t = 1; reverse = false;
+                        from = to = j => railPos(sec, j, s.ya, vw);
+                    }
+                    if (reduceMotion) t = t >= 0.5 ? 1 : 0;
+
+                    const O = 1 + (N - 1) * STAGGER;
+                    let x0 = Infinity, x1 = -Infinity, y0 = Infinity, y1 = -Infinity;
+                    sec.letters.forEach((L, j) => {
+                        const order = reverse ? N - 1 - j : j;               // last letter leads when moving up
+                        const d = ease(clamp01(t * O - order * STAGGER));
+                        const a = from(j), b = to(j);
+                        const cx = (a.x + b.x) / 2 + ARC, cy = (a.y + b.y) / 2; // control point bulges into the page -> curved path
+                        const u = 1 - d;
+                        const x = u * u * a.x + 2 * u * d * cx + d * d * b.x;
+                        const y = u * u * a.y + 2 * u * d * cy + d * d * b.y;
+                        const r = a.r + (b.r - a.r) * d, sc = a.s + (b.s - a.s) * d, al = a.a + (b.a - a.a) * d;
+                        const key = `${x.toFixed(1)},${y.toFixed(1)},${r.toFixed(1)},${sc.toFixed(3)},${al.toFixed(2)}`;
+                        if (key !== L.key) {
+                            L.key = key;
+                            L.sp.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 0) translate(-50%, -50%) rotate(${r.toFixed(1)}deg) scale(${sc.toFixed(3)})`;
+                            L.sp.style.opacity = al.toFixed(2);
+                        }
+                        // Bounding box for the click/focus target
+                        const hw = sec.adv[j] * sc / 2 + 2, hh = BASE * sc / 2 + 2, vert = Math.abs(r) > 45;
+                        const ex = vert ? hh : hw, ey = vert ? hw : hh;
+                        x0 = Math.min(x0, x - ex); x1 = Math.max(x1, x + ex); y0 = Math.min(y0, y - ey); y1 = Math.max(y1, y + ey);
+                    });
+                    sec.hit.style.cssText = `width:${(x1 - x0).toFixed(0)}px;height:${(y1 - y0).toFixed(0)}px;transform:translate(${x0.toFixed(0)}px,${y0.toFixed(0)}px)`;
+                });
+
+                // Frosted panels sized to what's in each corner
+                glassTop.style.setProperty('--top-h', (TOP + Math.max(0, flipped - 1 + partial) * SLOT + GAP + BASE + 60) + 'px');
+                glassBot.style.setProperty('--bot-h', (queued > 0.05 ? queued * SLOT + BOTTOM + 50 : 0) + 'px');
+                glassBot.style.opacity = Math.min(1, queued);
+                root.classList.toggle('on-dark', S < heroBottom - 260);
+            }
+
+            window.addEventListener('resize', () => { dirty = true; });
+            window.addEventListener('load', () => { dirty = true; });
+            if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { dirty = true; });
+            if ('ResizeObserver' in window) new ResizeObserver(() => { dirty = true; }).observe(document.body);
             requestAnimationFrame(frame);
         })();
 
@@ -2455,10 +2846,24 @@
         /* =========================================
            9. VIDEO PLAY OVERLAYS
            ========================================= */
+        // Videos fetch nothing until they're near the viewport (or clicked)
+        function loadVideo(video) {
+            if (video.dataset.loaded) return;
+            $$('source[data-src]', video).forEach(src => { src.src = src.dataset.src; });
+            video.preload = 'metadata'; video.dataset.loaded = '1'; video.load();
+        }
+        const lazyVideos = $$('video[data-lazy-video]');
+        if ('IntersectionObserver' in window) {
+            const vio = new IntersectionObserver(entries => entries.forEach(en => {
+                if (en.isIntersecting) { loadVideo(en.target); vio.unobserve(en.target); }
+            }), { rootMargin: '300px 0px' });
+            lazyVideos.forEach(v => vio.observe(v));
+        } else lazyVideos.forEach(loadVideo);
+
         $$('.media-item').forEach(item => {
             const video = $('video', item), overlay = $('.play-overlay', item);
             if (!video || !overlay) return;
-            overlay.addEventListener('click', () => { video.controls = true; video.play(); overlay.classList.add('playing'); });
+            overlay.addEventListener('click', () => { loadVideo(video); video.controls = true; video.play(); overlay.classList.add('playing'); });
             video.addEventListener('pause', () => overlay.classList.remove('playing'));
             video.addEventListener('play', () => overlay.classList.add('playing'));
         });
